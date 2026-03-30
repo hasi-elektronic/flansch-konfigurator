@@ -1,0 +1,684 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-background-tertiary,#f0f2f7)}
+.topbar{background:#1a2744;padding:0 1.5rem;display:flex;align-items:center;height:56px}
+.logo-wrap{display:flex;align-items:center;gap:12px}
+.ms-logo{display:grid;grid-template-columns:1fr 1fr;gap:2px;width:38px;height:38px;flex-shrink:0}
+.ms-sq{border-radius:2px;display:flex;align-items:center;justify-content:center}
+.ms-sq.dk{background:#1a5fa8}.ms-sq.lt{background:#4fa3d8}
+.ms-sq .ltr{color:#fff;font-size:16px;font-weight:800;line-height:1}
+.logo-name{color:#fff;font-size:13px;font-weight:600;line-height:1.25}
+.logo-tag{color:#7a9abf;font-size:8px;letter-spacing:.07em;text-transform:uppercase;margin-top:2px}
+.hero-nav-area{background:#dce8f5;border-bottom:2px solid #b8cce0;padding:12px 1.5rem 14px}
+.hero-title{font-size:22px;font-weight:300;color:#1a2744;margin-bottom:4px}
+.hero-title b{font-weight:800;color:#1a5fa8}
+.hero-sub{font-size:9px;color:#4a7aa8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.acc-nav{display:flex;flex-direction:column;gap:6px;width:100%}
+.acc-menu{border-radius:10px;overflow:hidden;width:100%}
+.acc-header{display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer;user-select:none;border-radius:10px;transition:background .15s}
+.acc-menu.open .acc-header{border-radius:10px 10px 0 0}
+.acc-ico{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.acc-lbl{font-size:12px;font-weight:700;flex:1}
+.acc-cnt{font-size:8px;font-weight:700;padding:2px 8px;border-radius:20px}
+.acc-arr{font-size:9px;transition:transform .2s;opacity:.7}
+.acc-menu.open .acc-arr{transform:rotate(180deg)}
+.acc-tabs{display:none;padding:6px 8px 8px;gap:5px;flex-wrap:wrap}
+.acc-menu.open .acc-tabs{display:flex}
+.atab{padding:5px 12px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;border:1.5px solid;transition:all .12s;white-space:nowrap}
+.acc-menu.rund .acc-header{background:#c8ddf5;color:#1a2744}
+.acc-menu.rund.open .acc-header{background:#1a5fa8;color:#fff}
+.acc-menu.rund .acc-ico{background:#1a5fa8}
+.acc-menu.rund .acc-cnt{background:#a0c4ef;color:#1a3060}
+.acc-menu.rund .acc-tabs{background:#cde0f5;border:1px solid #b0ccec;border-top:none;border-radius:0 0 10px 10px}
+.acc-menu.rund .atab{border-color:#8ab4e0;background:#fff;color:#1a5fa8}
+.acc-menu.rund .atab:hover,.acc-menu.rund .atab.on{background:#1a5fa8;color:#fff;border-color:#1a5fa8}
+.acc-menu.rect .acc-header{background:#c8eab8;color:#1a3a10}
+.acc-menu.rect.open .acc-header{background:#3b6d11;color:#fff}
+.acc-menu.rect .acc-ico{background:#3b6d11}
+.acc-menu.rect .acc-cnt{background:#a0d880;color:#1a3a10}
+.acc-menu.rect .acc-tabs{background:#daf0c8;border:1px solid #a0d070;border-top:none;border-radius:0 0 10px 10px}
+.acc-menu.rect .atab{border-color:#7ab870;background:#fff;color:#2a5010}
+.acc-menu.rect .atab:hover,.acc-menu.rect .atab.on{background:#3b6d11;color:#fff;border-color:#3b6d11}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.content{padding:1rem 1.5rem;max-width:980px}
+.ctrl-row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.ctrl-box{background:var(--color-background-primary,#fff);border:1px solid var(--color-border-tertiary,#e2e6ef);border-radius:10px;padding:10px 14px;flex:1;min-width:110px}
+.ctrl-box label{display:block;font-size:10px;font-weight:700;color:var(--color-text-secondary,#8fa8c8);letter-spacing:.09em;text-transform:uppercase;margin-bottom:6px}
+.ctrl-box select,.ctrl-box input[type=number]{width:100%;padding:7px 10px;font-size:13px;font-weight:500;border:1.5px solid var(--color-border-tertiary,#e2e6ef);border-radius:7px;background:var(--color-background-secondary,#f8f9fb);color:var(--color-text-primary,#1a2744)}
+.ctrl-box select:focus,.ctrl-box input:focus{outline:none;border-color:#3b6d11}
+.ctrl-box.narrow{flex:0 0 100px;min-width:80px}
+/* Freimass */
+.fm-toggle{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:8px 12px;background:#fff;border:1.5px solid #e2e6ef;border-radius:10px;font-size:11px;font-weight:700;color:#5a7a9a;cursor:pointer;user-select:none}
+.fm-sw{width:32px;height:17px;border-radius:9px;background:#c0cce0;position:relative;flex-shrink:0;transition:background .15s}
+.fm-sw::after{content:'';position:absolute;width:13px;height:13px;border-radius:50%;background:#fff;top:2px;left:2px;transition:left .15s}
+.fm-toggle.on .fm-sw{background:#3b6d11}
+.fm-toggle.on .fm-sw::after{left:17px}
+/* Profil + Bohrung Panel */
+.boh-panel{background:#fff;border:1.5px solid #b0d89a;border-radius:12px;padding:13px 15px;margin-bottom:10px}
+.boh-title{font-size:10px;font-weight:700;color:#2a5010;letter-spacing:.08em;text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.ptag{display:inline-block;color:#fff;font-size:8px;font-weight:700;padding:2px 7px;border-radius:20px}
+/* Profil 3 Modi */
+.profil-wrap{padding:8px 11px;background:#f5faf2;border:1.5px solid #c8e6b8;border-radius:9px;margin-bottom:9px}
+.pr-mode-row{display:flex;align-items:center;gap:5px;margin-bottom:6px;flex-wrap:wrap}
+.pr-mode-row>label{font-size:9px;font-weight:700;color:#2a5010}
+.pr-tog{padding:3px 9px;border-radius:20px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid #c8e6b8;background:#fff;color:#3b6d11;transition:all .1s}
+.pr-tog.on{background:#3b6d11;color:#fff;border-color:#3b6d11}
+.pr-sel{padding:5px 8px;font-size:12px;font-weight:700;border:1.5px solid #b0d89a;border-radius:6px;background:#fff;color:#1a2744;outline:none;cursor:pointer;min-width:140px}
+.pr-sel:disabled{background:#f0f0f0;color:#aaa;border-color:#ddd;cursor:default}
+.pr-auto-lbl{font-size:9px;color:#639922;font-style:italic;white-space:nowrap}
+.pr-free-fields{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-top:6px}
+.pff{display:flex;flex-direction:column;gap:3px}
+.pff label{font-size:8px;font-weight:700;color:#2a5010;text-transform:uppercase;letter-spacing:.05em}
+.pff input{width:60px;padding:5px 6px;font-size:13px;font-weight:700;border:1.5px solid #b0d89a;border-radius:6px;background:#fff;color:#1a2744;outline:none;text-align:center}
+.pff input:focus{border-color:#3b6d11}
+.pff-u{font-size:8px;color:#639922;font-weight:700;text-align:center;margin-top:1px}
+.pr-info{font-size:9px;color:#3b6d11;background:#eaf5e0;border-radius:6px;padding:5px 9px;margin-top:7px;line-height:1.7}
+.pr-info strong{color:#1a3a10}
+/* 4 Seiten 2×2 */
+.four-sides{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:7px}
+.side-box{background:#f5faf2;border:1.5px solid #c8e6b8;border-radius:9px;padding:9px 11px}
+.side-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.si{width:17px;height:17px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0}
+.si-o{background:#1a5fa8;color:#fff}.si-u{background:#639922;color:#fff}.si-l{background:#ba7517;color:#fff}.si-r{background:#a32d2d;color:#fff}
+.smt-row{display:flex;gap:3px;margin-bottom:6px;flex-wrap:wrap}
+.smt{padding:2px 8px;border-radius:20px;font-size:8px;font-weight:700;cursor:pointer;border:1px solid #c8e6b8;background:#fff;color:#3b6d11}
+.smt.on{background:#3b6d11;color:#fff;border-color:#3b6d11}
+.sr-row{display:flex;align-items:center;gap:5px;margin-bottom:4px}
+.sr-row label{font-size:9px;color:#2a5010;white-space:nowrap;min-width:52px;font-weight:600}
+.sr-inp{flex:1;padding:5px 7px;font-size:13px;font-weight:700;border:1.5px solid #b0d89a;border-radius:6px;background:#fff;color:#1a2744;outline:none;text-align:center;min-width:0}
+.sr-inp:focus{border-color:#3b6d11}
+.sr-unit{font-size:9px;color:#639922;font-weight:700;white-space:nowrap}
+.sr-calc{font-size:8px;color:#639922;margin-top:3px;font-style:italic;min-height:11px}
+.warn-bx{font-size:8px;color:#ba4010;background:#fff3ed;border:1px solid #f5c6aa;border-radius:5px;padding:3px 7px;margin-top:3px;display:none}
+.boh-total{font-size:9px;color:#639922;text-align:right;margin-top:4px;font-weight:600}
+/* Main panel */
+.main-panel{display:grid;grid-template-columns:220px 1fr;gap:10px;margin-bottom:10px;align-items:start}
+.card{background:var(--color-background-primary,#fff);border:1px solid var(--color-border-tertiary,#e2e6ef);border-radius:12px;padding:14px}
+.preview-wrap{width:192px;height:192px;border:1px solid var(--color-border-tertiary,#e2e6ef);border-radius:6px;overflow:hidden}
+.dn-pill{color:#fff;font-size:9px;font-weight:700;padding:3px 12px;border-radius:20px;margin-top:8px;display:inline-block;letter-spacing:.04em}
+.right-panel{display:flex;flex-direction:column;gap:10px;min-width:0}
+.dims-card{background:var(--color-background-primary,#fff);border:1px solid var(--color-border-tertiary,#e2e6ef);border-radius:12px;padding:14px}
+.slabel{font-size:10px;font-weight:700;color:var(--color-text-secondary,#8fa8c8);letter-spacing:.09em;text-transform:uppercase;margin-bottom:8px}
+.dims-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.dim-cell{background:var(--color-background-secondary,#f5f7fb);border-radius:7px;padding:8px 5px;text-align:center;border:1px solid var(--color-border-tertiary,#eaecf4)}
+.dim-val{font-size:13px;font-weight:700;color:var(--color-text-primary,#1a2744)}
+.dim-key{font-size:7px;font-weight:700;color:var(--color-text-secondary,#8fa8c8);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.dim-sub{font-size:7px;color:var(--color-text-tertiary,#b0b8cc)}
+.norm-note{font-size:9px;color:var(--color-text-secondary,#8fa8c8);padding-top:8px;border-top:1px solid var(--color-border-tertiary,#eaecf4)}
+.btn-group{display:grid;grid-template-columns:1fr auto;gap:8px}
+.btn-dxf{padding:11px 14px;color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-dxf:hover{opacity:.85}
+.btn-print{padding:11px 16px;background:var(--color-background-secondary,#f0f4f9);color:var(--color-text-secondary,#5a7a9a);border:1px solid var(--color-border-tertiary,#d0daea);border-radius:9px;font-size:12px;font-weight:700;cursor:pointer}
+.vsc-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--color-border-tertiary,#e2e6ef);border-radius:10px;overflow:hidden;margin-bottom:8px}
+.vsc-cell{background:var(--color-background-primary,#fff);padding:10px 12px}
+.vsc-label{font-size:9px;font-weight:700;color:var(--color-text-secondary,#8fa8c8);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.vsc-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.vsc-val{font-size:15px;font-weight:700}
+.vsc-sub{font-size:9px;color:var(--color-text-secondary,#8fa8c8);margin-top:2px}
+.auf-row{display:flex;align-items:center;gap:6px;margin-top:6px;padding-top:6px;border-top:1px solid var(--color-border-tertiary,#eaecf4)}
+.auf-row label{font-size:9px;color:var(--color-text-secondary,#8fa8c8);white-space:nowrap}
+.auf-row input{width:48px;padding:3px 6px;font-size:12px;font-weight:700;border:1.5px solid var(--color-border-tertiary,#e2e6ef);border-radius:5px;background:var(--color-background-secondary,#f5f7fb);color:var(--color-text-primary,#1a2744);text-align:center}
+.auf-row .auf-unit{font-size:9px;color:#4fa3d8;font-weight:700}
+.auf-row .auf-r{margin-left:auto;font-size:12px;font-weight:700;color:#0c447c}
+.bar-track{height:5px;background:var(--color-border-tertiary,#eaecf4);border-radius:4px;overflow:hidden;display:flex;margin-bottom:10px}
+.bar-g{background:#639922}.bar-a2{background:#ef9f27}
+.kosten-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.karte{background:var(--color-background-primary,#fff);border:1px solid var(--color-border-tertiary,#e2e6ef);border-radius:12px;padding:13px}
+.karte-head{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.karte-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ki-b{background:#e6f1fb}.ki-a{background:#faeeda}.ki-p{background:#eeedfe}.ki-g{background:#eaf3de}.ki-t{background:#e1f5ee}.ki-gray{background:#f1efe8}
+.karte-title{font-size:12px;font-weight:700;color:var(--color-text-primary,#1a2744)}
+.karte-sub{font-size:9px;color:var(--color-text-secondary,#8fa8c8);margin-top:1px}
+.karte-result{font-size:14px;font-weight:700;color:var(--color-text-primary,#1a2744);margin-top:7px;padding-top:7px;border-top:1px solid var(--color-border-tertiary,#f0f2f8)}
+.karte-result span{font-size:10px;color:var(--color-text-secondary,#8fa8c8);font-weight:400;margin-left:2px}
+.ir{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.ir label{font-size:10px;color:var(--color-text-secondary,#8fa8c8);white-space:nowrap;min-width:80px}
+.ir input{flex:1;padding:5px 7px;font-size:12px;border:1.5px solid var(--color-border-tertiary,#e2e6ef);border-radius:6px;background:var(--color-background-secondary,#f8f9fb);color:var(--color-text-primary,#1a2744)}
+.ir .u{font-size:9px;color:var(--color-text-secondary,#8fa8c8)}
+.linfo{background:var(--color-background-secondary,#f0f4f9);border-radius:6px;padding:7px 10px;font-size:9px;color:#5a7a9a;margin-bottom:7px;line-height:1.6}
+.linfo strong{color:#1a2744}
+.togs{display:flex;gap:4px;margin-bottom:7px}
+.tog{padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid var(--color-border-tertiary,#e2e6ef);background:var(--color-background-secondary,#f5f7fb);color:#8fa8c8}
+.tog.on{background:#3b6d11;color:#fff;border-color:#3b6d11}
+.std-badge{display:inline-block;background:#e6f1fb;color:#1a5fa8;font-size:8px;font-weight:700;padding:1px 7px;border-radius:10px;margin-left:5px;letter-spacing:.04em;vertical-align:middle}
+.sum-card{background:#1a2744;border-radius:12px;padding:16px;margin-bottom:10px}
+.sum-title{color:#7a9abf;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.sr2{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #253560;font-size:12px}
+.sr2 .sl{color:#7a9abf}.sr2 .sv{color:#fff;font-weight:600}
+.sr2.hl .sl{color:#85b7eb;font-weight:600}.sr2.hl .sv{color:#85b7eb;font-weight:700}
+.auf-band{background:#253560;border-radius:8px;padding:9px 14px;margin:8px 0}
+.auf-band-title{color:#7a9abf;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}
+.abr{display:flex;align-items:center;gap:9px}
+.abl{color:#7a9abf;font-size:11px;white-space:nowrap;min-width:120px}
+.ai{background:#1a2744;border:1px solid #3a5080;border-radius:5px;color:#fff;font-size:12px;font-weight:600;padding:4px 8px;width:56px;text-align:center}
+.ai:focus{outline:none;border-color:#4fa3d8}
+.au{color:#4fa3d8;font-size:11px;font-weight:700}
+.ar2{color:#fff;font-size:12px;font-weight:700;margin-left:auto;min-width:70px;text-align:right}
+.vk-box{border-radius:9px;padding:12px 16px;margin-top:10px;display:flex;justify-content:space-between;align-items:center}
+.vk-g{background:#3b6d11}.vk-b{background:#1a5fa8}
+.vk-lbl{color:rgba(255,255,255,.75);font-size:11px;font-weight:600}
+.vk-val{color:#fff;font-size:24px;font-weight:700}
+.vk-qty{color:rgba(255,255,255,.7);font-size:12px;font-weight:600;text-align:right}
+.vk-qty-val{color:#fff;font-size:16px;font-weight:700;text-align:right}
+.footer{background:#1a2744;border-top:1px solid #253560;padding:14px 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.f-av{width:34px;height:34px;border-radius:50%;background:#253560;border:1.5px solid #3a5080;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#4fa3d8;flex-shrink:0}
+.f-txt{font-size:11px;color:#7a9abf;line-height:1.5}.f-txt strong{color:#c0d4ea;font-weight:600}
+.f-r{font-size:10px;color:#3a5080}
+</style>
+
+<div class="topbar">
+  <div class="logo-wrap">
+    <div class="ms-logo">
+      <div class="ms-sq dk"><span class="ltr">M</span></div>
+      <div class="ms-sq lt"><svg width="20" height="20" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="20" fill="white" opacity=".2"/><circle cx="50" cy="50" r="8" fill="white"/><path d="M50 26L57 44L50 50L43 44Z" fill="white" opacity=".9"/><path d="M74 50L57 57L50 50L57 43Z" fill="white" opacity=".7"/><path d="M50 74L43 57L50 50L57 57Z" fill="white" opacity=".9"/><path d="M26 50L43 43L50 50L43 57Z" fill="white" opacity=".7"/></svg></div>
+      <div class="ms-sq lt"><svg width="20" height="20" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="28" stroke="white" stroke-width="9" fill="none" opacity=".9"/><circle cx="50" cy="50" r="13" stroke="white" stroke-width="6" fill="none" opacity=".6"/></svg></div>
+      <div class="ms-sq dk"><span class="ltr">S</span></div>
+    </div>
+    <div>
+      <div class="logo-name">Manfred Sickinger Apparatebau GmbH & Co.KG</div>
+      <div class="logo-tag">Ventilatoren · Laserschneiden · Schweißbaugruppen · Industrielackierung</div>
+    </div>
+  </div>
+</div>
+
+<div class="hero-nav-area">
+  <div class="hero-title">Flansch<b>konfigurator</b></div>
+  <div class="hero-sub">DIN 24154 · EN 1092-1 · DIN 28034 · ANSI/ASME B16.5 · DIN 2501 · DIN 24193 Rechteckflansche · DXF-Export</div>
+  <div class="acc-nav">
+    <div class="acc-menu rund open" id="menu-rund">
+      <div class="acc-header" onclick="toggleMenu('rund')">
+        <div class="acc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <div class="acc-lbl">Runde Flansche <span class="acc-cnt">5 Normen</span></div>
+        <div class="acc-arr">▼</div>
+      </div>
+      <div class="acc-tabs">
+        <div class="atab on" onclick="selTab('rund','r1',this)">DIN 24154 / EN 12220</div>
+        <div class="atab" onclick="selTab('rund','r2',this)">EN 1092-1</div>
+        <div class="atab" onclick="selTab('rund','r3',this)">DIN 28034</div>
+        <div class="atab" onclick="selTab('rund','r4',this)">ANSI/ASME B16.5</div>
+        <div class="atab" onclick="selTab('rund','r5',this)">DIN 2501</div>
+      </div>
+    </div>
+    <div class="acc-menu rect" id="menu-rect">
+      <div class="acc-header" onclick="toggleMenu('rect')">
+        <div class="acc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="6" width="18" height="12" rx="1"/><rect x="7" y="10" width="10" height="4" rx="1"/></svg></div>
+        <div class="acc-lbl">Rechteckflansche <span class="acc-cnt">DIN 24193</span></div>
+        <div class="acc-arr">▼</div>
+      </div>
+      <div class="acc-tabs">
+        <div class="atab" onclick="selTab('rect','q1',this)">Reihe 1 — Winkelflansch</div>
+        <div class="atab" onclick="selTab('rect','q2',this)">Reihe 2 — Flach & Winkel</div>
+        <div class="atab" onclick="selTab('rect','q3',this)">Reihe 3 — Flach & Winkel</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="pane-r1" class="tab-pane active"></div>
+<div id="pane-r2" class="tab-pane"></div>
+<div id="pane-r3" class="tab-pane"></div>
+<div id="pane-r4" class="tab-pane"></div>
+<div id="pane-r5" class="tab-pane"></div>
+<div id="pane-q1" class="tab-pane"></div>
+<div id="pane-q2" class="tab-pane"></div>
+<div id="pane-q3" class="tab-pane"></div>
+
+<div class="footer">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="f-av">HG</div>
+    <div class="f-txt">Entwickelt von <strong>Hamdi Güncavdı</strong> für Manfred Sickinger Apparatebau GmbH & Co.KG · IT-Management · Hasi Elektronik · Vaihingen/Enz</div>
+  </div>
+  <div class="f-r">© 2026</div>
+</div>
+
+<script>
+const KANAL_A=[100,150,200,250,300,350,400,450,500,600,700,800,900,1000,1100,1200,1400,1600,1800,2000,2500,3000];
+const KANAL_B=[100,150,200,250,300,350,400,450,500,600,700,800,900,1000,1100,1200,1400,1600,1800,2000];
+const DICHTE=7.85;
+const MATS=[["St-37|0.72","St-37 — 0,72 €/kg"],["S235JR|0.70","S235JR — 0,70 €/kg"],["St-52|1.20","St-52 — 1,20 €/kg"],["S355MC|0.71","S355MC — 0,71 €/kg"],["1.4301|3.00","1.4301 — 3,00 €/kg"],["1.4404|4.10","1.4404 — 4,10 €/kg"],["Alu Almg-3|3.40","Alu Almg-3 — 3,40 €/kg"],["Blech verzinkt|1.50","Blech verzinkt — 1,50 €/kg"],["Hardox 400|0","Hardox 400 — auf Anfrage"]];
+const matOpts=MATS.map(([v,t])=>`<option value="${v}">${t}</option>`).join('');
+
+// ── Rechteck Profil ──
+const RECT_PR={'25x25x3':{b:25,s:3,dl:9,gpm:1.12},'35x35x4':{b:35,s:4,dl:11,gpm:2.09},'40x40x4':{b:40,s:4,dl:14,gpm:2.42},'50x50x5':{b:50,s:5,dl:18,gpm:3.77},'60x60x6':{b:60,s:6,dl:18,gpm:5.42}};
+const AUTO_PR_MAP={'R1':[[799,'25x25x3'],[1999,'35x35x4'],[2799,'50x50x5'],[9999,'60x60x6']],'R2':[[799,'25x25x3'],[1999,'35x35x4'],[2799,'50x50x5'],[9999,'60x60x6']],'R3':[[799,'35x35x4'],[1999,'40x40x4'],[2799,'50x50x5'],[9999,'60x60x6']]};
+function autoProfilKey(reihe,maxS){const rows=AUTO_PR_MAP[reihe]||AUTO_PR_MAP.R2;for(const[l,k]of rows)if(maxS<=l)return k;return rows[rows.length-1][1];}
+
+// ── Navigation ──
+let curMenu='rund';
+function toggleMenu(m){
+  if(curMenu===m)return;
+  document.getElementById('menu-'+curMenu).classList.remove('open');
+  document.getElementById('menu-'+m).classList.add('open');
+  curMenu=m;
+  const ft=m==='rund'?'r1':'q1';
+  document.getElementById('menu-'+m).querySelectorAll('.atab').forEach((t,i)=>t.classList.toggle('on',i===0));
+  showPane(ft);
+}
+function selTab(menu,tab,el){
+  if(curMenu!==menu){document.getElementById('menu-'+curMenu).classList.remove('open');document.getElementById('menu-'+menu).classList.add('open');curMenu=menu;}
+  document.getElementById('menu-'+menu).querySelectorAll('.atab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');showPane(tab);
+}
+function showPane(id){document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));document.getElementById('pane-'+id).classList.add('active');}
+
+function dc(v,key,sub){return`<div class="dim-cell"><div class="dim-val">${v}</div><div class="dim-key">${key}</div><div class="dim-sub">${sub||''}</div></div>`;}
+
+// ── Kosten HTML ──
+function kH(p){return`
+<div class="karte"><div class="karte-head"><div class="karte-icon ki-gray"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5f5e5a" stroke-width="2.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18M8 14h4M8 18h8"/></svg></div><div><div class="karte-title">Bearbeitung<span class="std-badge">15 min</span></div><div class="karte-sub">Büro / Sachbearbeiter</div></div></div>
+<div class="togs"><div class="tog" id="${p}-ba-ts" onclick="TG('${p}','ba','stk')">€/Stk</div><div class="tog on" id="${p}-ba-th" onclick="TG('${p}','ba','std')">€/Std</div></div>
+<div id="${p}-ba-rs" style="display:none"><div class="ir"><label>Preis/Stk</label><input type="number" id="${p}-ba-s" value="0" min="0" step="0.5"><span class="u">€</span></div></div>
+<div id="${p}-ba-rh"><div class="ir"><label>Stunden</label><input type="number" id="${p}-ba-h" value="0.25" min="0" step="0.05"><span class="u">Std</span></div><div class="ir"><label>Stundensatz</label><input type="number" id="${p}-ba-r" value="60" min="0" step="5"><span class="u">€/Std</span></div></div>
+<div class="karte-result" id="${p}-bar">15.00 €<span>/ Stk</span></div></div>
+<div class="karte"><div class="karte-head"><div class="karte-icon ki-b"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1a5fa8" stroke-width="2.5"><path d="M4 12h16M4 6l6 6-6 6"/></svg></div><div><div class="karte-title">Laserschneiden</div><div class="karte-sub">Schnittlänge × €/m</div></div></div>
+<div class="linfo" id="${p}-li">–</div>
+<div class="ir"><label>Laserpreis (€/m)</label><input type="number" id="${p}-lp" value="3.50" min="0" step="0.1"><span class="u">€/m</span></div>
+<div class="karte-result" id="${p}-lr">— €<span>/ Stk</span></div></div>
+<div class="karte"><div class="karte-head"><div class="karte-icon ki-a"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ba7517" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div><div><div class="karte-title">Entgraten & Schleifen</div><div class="karte-sub">Nachbearbeitung</div></div></div>
+<div class="togs"><div class="tog on" id="${p}-eg-ts" onclick="TG('${p}','eg','stk')">€/Stk</div><div class="tog" id="${p}-eg-th" onclick="TG('${p}','eg','std')">€/Std</div></div>
+<div id="${p}-eg-rs"><div class="ir"><label>Preis/Stk</label><input type="number" id="${p}-eg-s" value="5.00" min="0" step="0.5"><span class="u">€</span></div></div>
+<div id="${p}-eg-rh" style="display:none"><div class="ir"><label>Stunden</label><input type="number" id="${p}-eg-h" value="0.25" min="0" step="0.05"><span class="u">Std</span></div><div class="ir"><label>Stundensatz</label><input type="number" id="${p}-eg-r" value="60" min="0" step="5"><span class="u">€/Std</span></div></div>
+<div class="karte-result" id="${p}-egr">5.00 €<span>/ Stk</span></div></div>
+<div class="karte"><div class="karte-head"><div class="karte-icon ki-p"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#534ab7" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div><div class="karte-title">Schweißen</div><div class="karte-sub">Schweißbaugruppe</div></div></div>
+<div class="togs"><div class="tog on" id="${p}-sw-ts" onclick="TG('${p}','sw','stk')">€/Stk</div><div class="tog" id="${p}-sw-th" onclick="TG('${p}','sw','std')">€/Std</div></div>
+<div id="${p}-sw-rs"><div class="ir"><label>Preis/Stk</label><input type="number" id="${p}-sw-s" value="0" min="0" step="0.5"><span class="u">€</span></div></div>
+<div id="${p}-sw-rh" style="display:none"><div class="ir"><label>Stunden</label><input type="number" id="${p}-sw-h" value="0.5" min="0" step="0.05"><span class="u">Std</span></div><div class="ir"><label>Stundensatz</label><input type="number" id="${p}-sw-r" value="70" min="0" step="5"><span class="u">€/Std</span></div></div>
+<div class="karte-result" id="${p}-swr">0.00 €<span>/ Stk</span></div></div>
+<div class="karte"><div class="karte-head"><div class="karte-icon ki-g"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b6d11" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><div><div class="karte-title">Industrielackierung</div><div class="karte-sub">Beschichtung</div></div></div>
+<div class="togs"><div class="tog on" id="${p}-lk-ts" onclick="TG('${p}','lk','stk')">€/Stk</div><div class="tog" id="${p}-lk-th" onclick="TG('${p}','lk','std')">€/Std</div></div>
+<div id="${p}-lk-rs"><div class="ir"><label>Preis/Stk</label><input type="number" id="${p}-lk-s" value="0" min="0" step="0.5"><span class="u">€</span></div></div>
+<div id="${p}-lk-rh" style="display:none"><div class="ir"><label>Stunden</label><input type="number" id="${p}-lk-h" value="0.3" min="0" step="0.05"><span class="u">Std</span></div><div class="ir"><label>Stundensatz</label><input type="number" id="${p}-lk-r" value="55" min="0" step="5"><span class="u">€/Std</span></div></div>
+<div class="karte-result" id="${p}-lkr">0.00 €<span>/ Stk</span></div></div>
+<div class="karte"><div class="karte-head"><div class="karte-icon ki-t"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f6e56" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div><div><div class="karte-title">Handling / QS</div><div class="karte-sub">Verpackung · Warenausgang · QS</div></div></div>
+<div class="togs"><div class="tog on" id="${p}-qs-ts" onclick="TG('${p}','qs','stk')">€/Stk</div><div class="tog" id="${p}-qs-th" onclick="TG('${p}','qs','std')">€/Std</div></div>
+<div id="${p}-qs-rs"><div class="ir"><label>Preis/Stk</label><input type="number" id="${p}-qs-s" value="0" min="0" step="0.5"><span class="u">€</span></div></div>
+<div id="${p}-qs-rh" style="display:none"><div class="ir"><label>Stunden</label><input type="number" id="${p}-qs-h" value="0.25" min="0" step="0.05"><span class="u">Std</span></div><div class="ir"><label>Stundensatz</label><input type="number" id="${p}-qs-r" value="60" min="0" step="5"><span class="u">€/Std</span></div></div>
+<div class="karte-result" id="${p}-qsr">0.00 €<span>/ Stk</span></div></div>`;}
+
+function TG(p,proc,mode){
+  document.getElementById(`${p}-${proc}-ts`).classList.toggle('on',mode==='stk');
+  document.getElementById(`${p}-${proc}-th`).classList.toggle('on',mode==='std');
+  document.getElementById(`${p}-${proc}-rs`).style.display=mode==='stk'?'':'none';
+  document.getElementById(`${p}-${proc}-rh`).style.display=mode==='std'?'':'none';
+  renderP(p);
+}
+function gK(p,proc){
+  const on=document.getElementById(`${p}-${proc}-ts`)?.classList.contains('on');
+  if(on)return parseFloat(document.getElementById(`${p}-${proc}-s`)?.value)||0;
+  return(parseFloat(document.getElementById(`${p}-${proc}-h`)?.value)||0)*(parseFloat(document.getElementById(`${p}-${proc}-r`)?.value)||0);
+}
+
+const curD={};
+function renderP(p){
+  const c=curD[p];if(!c)return;
+  const price=parseFloat((document.getElementById(`${p}-mat`)?.value||'').split('|')[1])||0;
+  const qty=parseInt(document.getElementById(`${p}-qty`)?.value)||1;
+  const aufBp=parseFloat(document.getElementById(`${p}-auf`)?.value)||0;
+  const aufGv=parseFloat(document.getElementById(`${p}-auf-g`)?.value)||30;
+  const ba=gK(p,'ba'),eg=gK(p,'eg'),sw=gK(p,'sw'),lkk=gK(p,'lk'),qs=gK(p,'qs');
+  const lp=parseFloat(document.getElementById(`${p}-lp`)?.value)||0;
+  const lk=(c.ll||0)*lp;
+  const bW=c.bW||0,bN=bW*price,bA=bN*(aufBp/100),bM=bN+bA;
+  const zw=bM+ba+lk+eg+sw+lkk+qs,gA=zw*(aufGv/100),vk=zw+gA;
+  const g=id=>document.getElementById(id);const set=(id,v)=>{const e=g(id);if(e)e.textContent=v;};
+  set(`${p}-auf-r`,price>0?`+ ${bA.toFixed(2)} €`:'–');
+  g(`${p}-bar`).innerHTML=`${ba.toFixed(2)} €<span>/ Stk</span>`;
+  g(`${p}-lr`).innerHTML=`${lk.toFixed(2)} €<span>/ Stk</span>`;
+  g(`${p}-egr`).innerHTML=`${eg.toFixed(2)} €<span>/ Stk</span>`;
+  g(`${p}-swr`).innerHTML=`${sw.toFixed(2)} €<span>/ Stk</span>`;
+  g(`${p}-lkr`).innerHTML=`${lkk.toFixed(2)} €<span>/ Stk</span>`;
+  g(`${p}-qsr`).innerHTML=`${qs.toFixed(2)} €<span>/ Stk</span>`;
+  set(`${p}-bd`,c.bWlbl||'');set(`${p}-bk`,c.bklbl||'');set(`${p}-fk`,c.fklbl||'');set(`${p}-fp2`,c.fp2lbl||'');set(`${p}-vk`,c.vklbl||'');set(`${p}-vp`,c.vplbl||'');
+  if(g(`${p}-bg`))g(`${p}-bg`).style.width=(c.nu||70)+'%';
+  if(g(`${p}-ba2`))g(`${p}-ba2`).style.width=(100-(c.nu||70))+'%';
+  const vkCls=c.type==='rect'?'vk-g':'vk-b';
+  g(`${p}-sum`).innerHTML=`<div class="sum-title">Vollkostenrechnung</div>
+<div class="sr2"><span class="sl">Material netto (${bW.toFixed(3)} kg × ${price.toFixed(2)} €/kg)</span><span class="sv">${price>0?bN.toFixed(2)+' €':'auf Anfrage'}</span></div>
+<div class="sr2"><span class="sl">+ Materialaufschlag (${aufBp} %)</span><span class="sv">${price>0?bA.toFixed(2)+' €':'–'}</span></div>
+<div class="sr2 hl"><span class="sl">Material mit Aufschlag</span><span class="sv">${price>0?bM.toFixed(2)+' €':'–'}</span></div>
+<div class="sr2"><span class="sl">Bearbeitung (Büro)</span><span class="sv">${ba.toFixed(2)} €</span></div>
+<div class="sr2"><span class="sl">Laserschneiden</span><span class="sv">${lk.toFixed(2)} €</span></div>
+<div class="sr2"><span class="sl">Entgraten & Schleifen</span><span class="sv">${eg.toFixed(2)} €</span></div>
+<div class="sr2"><span class="sl">Schweißen</span><span class="sv">${sw.toFixed(2)} €</span></div>
+<div class="sr2"><span class="sl">Industrielackierung</span><span class="sv">${lkk.toFixed(2)} €</span></div>
+<div class="sr2"><span class="sl">Handling / QS</span><span class="sv">${qs.toFixed(2)} €</span></div>
+<div class="sr2 hl"><span class="sl">Zwischensumme</span><span class="sv">${price>0?zw.toFixed(2)+' €':'–'}</span></div>
+<div class="auf-band"><div class="auf-band-title">Gewinnaufschlag</div><div class="abr"><span class="abl">Gewinnaufschlag</span><input class="ai" type="number" id="${p}-auf-g" value="${aufGv}" min="0" max="999" step="1" oninput="renderP('${p}')"><span class="au">%</span><span class="ar2">${price>0?`+ ${gA.toFixed(2)} €`:'–'}</span></div></div>
+<div class="vk-box ${vkCls}"><div><div class="vk-lbl">Verkaufspreis / Stk</div><div class="vk-val">${price>0?vk.toFixed(2)+' €':'auf Anfrage'}</div></div>${qty>1?`<div><div class="vk-qty">${qty} Stk</div><div class="vk-qty-val">${price>0?(vk*qty).toFixed(2)+' €':'–'}</div></div>`:''}</div>`;}
+
+// ── SVG Rund ──
+function drawRund(svgId,D,k,n,dl,iD){
+  const svg=document.getElementById(svgId);if(!svg)return;
+  const W=192,CX=96,CY=96,R=D/2,sc=(W/2-4)/R;
+  svg.setAttribute('viewBox',`0 0 ${W} ${W}`);svg.innerHTML='';
+  const ns='http://www.w3.org/2000/svg';const mk=(t,a)=>{const e=document.createElementNS(ns,t);Object.entries(a).forEach(([k2,v])=>e.setAttribute(k2,v));return e;};
+  const defs=document.createElementNS(ns,'defs');const mask=document.createElementNS(ns,'mask');mask.setAttribute('id','m'+svgId);
+  mask.appendChild(mk('circle',{cx:CX,cy:CY,r:R*sc,fill:'white'}));
+  if(iD>0)mask.appendChild(mk('circle',{cx:CX,cy:CY,r:(iD/2)*sc,fill:'black'}));
+  for(let i=0;i<n;i++){const a=2*Math.PI*i/n-Math.PI/2;mask.appendChild(mk('circle',{cx:CX+Math.cos(a)*(k/2)*sc,cy:CY+Math.sin(a)*(k/2)*sc,r:(dl/2)*sc,fill:'black'}));}
+  defs.appendChild(mask);svg.appendChild(defs);
+  svg.appendChild(mk('rect',{x:0,y:0,width:W,height:W,fill:'#fde8c8',rx:3}));
+  if(iD>0)svg.appendChild(mk('circle',{cx:CX,cy:CY,r:(iD/2)*sc,fill:'#fde8c8'}));
+  svg.appendChild(mk('circle',{cx:CX,cy:CY,r:R*sc,fill:'#d4edda',mask:`url(#m${svgId})`}));
+  for(let i=0;i<n;i++){const a=2*Math.PI*i/n-Math.PI/2;svg.appendChild(mk('circle',{cx:CX+Math.cos(a)*(k/2)*sc,cy:CY+Math.sin(a)*(k/2)*sc,r:(dl/2)*sc,fill:'#fde8c8'}));}
+  svg.appendChild(mk('circle',{cx:CX,cy:CY,r:R*sc,fill:'none',stroke:'#1a5fa8','stroke-width':1.5}));
+  if(iD>0)svg.appendChild(mk('circle',{cx:CX,cy:CY,r:(iD/2)*sc,fill:'none',stroke:'#1a5fa8','stroke-width':1}));
+  for(let i=0;i<n;i++){const a=2*Math.PI*i/n-Math.PI/2;svg.appendChild(mk('circle',{cx:CX+Math.cos(a)*(k/2)*sc,cy:CY+Math.sin(a)*(k/2)*sc,r:(dl/2)*sc,fill:'none',stroke:'#1a5fa8','stroke-width':1}));}
+  svg.appendChild(mk('rect',{x:.5,y:.5,width:W-1,height:W-1,fill:'none',stroke:'#1a5fa8','stroke-width':1.5,rx:3}));
+}
+
+// ── SVG Rechteck mit farbigen Bohrungen ──
+function drawRect(svgId,a,b,profB,dl,bohPts){
+  const svg=document.getElementById(svgId);if(!svg)return;
+  const W=192,pad=12,aOD=a+2*profB,bOD=b+2*profB;
+  const sc=Math.min((W-2*pad)/aOD,(W-2*pad)/bOD);
+  const fw=aOD*sc,fh=bOD*sc,ox=(W-fw)/2,oy=(W-fh)/2,cx0=ox+fw/2,cy0=oy+fh/2;
+  const ns='http://www.w3.org/2000/svg';
+  svg.setAttribute('viewBox',`0 0 ${W} ${W}`);svg.innerHTML='';
+  const mk=(t,at)=>{const e=document.createElementNS(ns,t);Object.entries(at).forEach(([k,v])=>e.setAttribute(k,v));return e;};
+  svg.appendChild(mk('rect',{x:0,y:0,width:W,height:W,fill:'#fde8c8',rx:3}));
+  svg.appendChild(mk('rect',{x:ox,y:oy,width:fw,height:fh,fill:'#c8e6b8',stroke:'#3b6d11','stroke-width':1.5,rx:2}));
+  svg.appendChild(mk('rect',{x:ox+profB*sc,y:oy+profB*sc,width:a*sc,height:b*sc,fill:'#fde8c8',stroke:'#a06020','stroke-width':1}));
+  const colMap={o:'#1a5fa8',u:'#639922',l:'#ba7517',r:'#a32d2d'};
+  const bR=(dl/2)*sc;
+  bohPts.forEach(pt=>{
+    const bx=cx0+pt.x*sc,by=cy0+pt.y*sc,col=colMap[pt.s]||'#1a5fa8';
+    svg.appendChild(mk('circle',{cx:bx,cy:by,r:bR,fill:'#fff',stroke:col,'stroke-width':1.4}));
+    const cs=Math.min(bR*.55,3.5);
+    svg.appendChild(mk('line',{x1:bx-cs,y1:by,x2:bx+cs,y2:by,stroke:col,'stroke-width':.8}));
+    svg.appendChild(mk('line',{x1:bx,y1:by-cs,x2:bx,y2:by+cs,stroke:col,'stroke-width':.8}));
+  });
+  svg.appendChild(mk('rect',{x:ox,y:oy,width:fw,height:fh,fill:'none',stroke:'#2a5010','stroke-width':1.5,rx:2}));
+  svg.appendChild(mk('rect',{x:ox+profB*sc,y:oy+profB*sc,width:a*sc,height:b*sc,fill:'none',stroke:'#a06020','stroke-width':1}));
+  const ta=document.createElementNS(ns,'text');ta.setAttribute('x',W/2);ta.setAttribute('y',oy-3);ta.setAttribute('text-anchor','middle');ta.setAttribute('font-size','8');ta.setAttribute('font-weight','700');ta.setAttribute('fill','#1a3a10');ta.textContent=`a=${a}`;svg.appendChild(ta);
+  const tb=document.createElementNS(ns,'text');tb.setAttribute('x',ox-4);tb.setAttribute('y',W/2);tb.setAttribute('text-anchor','middle');tb.setAttribute('font-size','8');tb.setAttribute('font-weight','700');tb.setAttribute('fill','#1a3a10');tb.setAttribute('transform',`rotate(-90,${ox-4},${W/2})`);tb.textContent=`b=${b}`;svg.appendChild(tb);
+  svg.appendChild(mk('rect',{x:.5,y:.5,width:W-1,height:W-1,fill:'none',stroke:'#3b6d11','stroke-width':1.5,rx:3}));
+}
+
+// ── Bohrungspositionen ──
+function calcSidePos(seite,modus,n,e1,t){
+  if(modus==='sym'){const s=seite/(n+1);return Array.from({length:n},(_,i)=>-seite/2+s*(i+1));}
+  if(modus==='rand'){const av=seite-2*e1;const s=n>1?av/(n-1):0;return Array.from({length:n},(_,i)=>-seite/2+e1+s*i);}
+  return Array.from({length:n},(_,i)=>-seite/2+e1+t*i);
+}
+function buildBohPts(a,b,profB,sides){
+  const aOD=a+2*profB,bOD=b+2*profB,bCtr=profB/2;
+  const pts=[];
+  const y_o=-bOD/2+bCtr,y_u=bOD/2-bCtr,x_l=-aOD/2+bCtr,x_r=aOD/2-bCtr;
+  calcSidePos(a,sides.O.m,sides.O.n,sides.O.e1,sides.O.t).forEach(x=>pts.push({x,y:y_o,s:'o'}));
+  calcSidePos(a,sides.U.m,sides.U.n,sides.U.e1,sides.U.t).forEach(x=>pts.push({x,y:y_u,s:'u'}));
+  calcSidePos(b,sides.L.m,sides.L.n,sides.L.e1,sides.L.t).forEach(y=>pts.push({x:x_l,y,s:'l'}));
+  calcSidePos(b,sides.R.m,sides.R.n,sides.R.e1,sides.R.t).forEach(y=>pts.push({x:x_r,y,s:'r'}));
+  return pts;
+}
+
+// ── DXF Rechteck — 4 Layer ──
+function dxfRect(p){
+  const c=curD[p];if(!c||c.type!=='rect')return;
+  const{a,b,profB,dl,bohPts}=c;const aOD=a+2*profB,bOD=b+2*profB;
+  let dxf="0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n9\n$INSUNITS\n70\n4\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n";
+  const pl=(pts,lay)=>{let s=`0\nLWPOLYLINE\n8\n${lay}\n90\n${pts.length}\n70\n1\n`;pts.forEach(([x,y])=>{s+=`10\n${x.toFixed(4)}\n20\n${y.toFixed(4)}\n`;});return s;};
+  const ci=(cx,cy,r,lay)=>`0\nCIRCLE\n8\n${lay}\n10\n${cx.toFixed(4)}\n20\n${cy.toFixed(4)}\n30\n0.0\n40\n${r.toFixed(4)}\n`;
+  dxf+=pl([[-aOD/2,-bOD/2],[aOD/2,-bOD/2],[aOD/2,bOD/2],[-aOD/2,bOD/2]],'KONTUR_AUSSEN');
+  dxf+=pl([[-a/2,-b/2],[a/2,-b/2],[a/2,b/2],[-a/2,b/2]],'KONTUR_INNEN');
+  const lm={o:'OBEN',u:'UNTEN',l:'LINKS',r:'RECHTS'};
+  bohPts.forEach(pt=>dxf+=ci(pt.x,pt.y,dl/2,lm[pt.s]||'BOHRUNGEN'));
+  dxf+="0\nENDSEC\n0\nEOF\n";
+  const blob=new Blob([dxf],{type:'application/dxf'});const url=URL.createObjectURL(blob);const el=document.createElement('a');el.href=url;el.download=`DIN24193_${c.reihe}_${a}x${b}.dxf`;el.click();URL.revokeObjectURL(url);
+}
+
+// ── Rechteck Pane ──
+const prModeMap={},sideModeMap={},fmMap={};
+
+function setupRect(paneId,p,reihe){
+  const aOpts=KANAL_A.map(v=>`<option value="${v}"${v===400?' selected':''}>${v} mm</option>`).join('');
+  const bOpts=KANAL_B.map(v=>`<option value="${v}"${v===300?' selected':''}>${v} mm</option>`).join('');
+  const prOpts=Object.keys(RECT_PR).map(k=>`<option value="${k}">${k.replace(/x/g,'×')} mm</option>`).join('');
+  const sideBox=(sid,lbl,siCls,defN,defE1,defT)=>`
+<div class="side-box">
+  <div class="side-lbl"><span class="si ${siCls}">${lbl[0]}</span>${lbl}</div>
+  <div class="smt-row">
+    <div class="smt" id="${p}-sm-${sid}-sym" onclick="setSideMode('${p}','${sid}','sym','${reihe}')">Symmetrisch</div>
+    <div class="smt on" id="${p}-sm-${sid}-rand" onclick="setSideMode('${p}','${sid}','rand','${reihe}')">Ab Rand e₁</div>
+    <div class="smt" id="${p}-sm-${sid}-fix" onclick="setSideMode('${p}','${sid}','fix','${reihe}')">e₁+t</div>
+  </div>
+  <div class="sr-row"><label>Anzahl</label><input class="sr-inp" id="${p}-n${sid}" type="number" value="${defN}" min="1" max="40" oninput="updRect('${p}','${reihe}')"><span class="sr-unit">Stk</span></div>
+  <div class="sr-row" id="${p}-re1-${sid}"><label>Rand e₁</label><input class="sr-inp" id="${p}-e1${sid}" type="number" value="${defE1}" min="0" step="1" oninput="updRect('${p}','${reihe}')"><span class="sr-unit">mm</span></div>
+  <div class="sr-row" id="${p}-rt-${sid}" style="display:none"><label>Teilung t</label><input class="sr-inp" id="${p}-t${sid}" type="number" value="${defT}" min="1" step="1" oninput="updRect('${p}','${reihe}')"><span class="sr-unit">mm</span></div>
+  <div class="sr-calc" id="${p}-calc-${sid}">—</div>
+  <div class="warn-bx" id="${p}-warn-${sid}">⚠ Außerhalb!</div>
+</div>`;
+
+  document.getElementById('pane-'+paneId).innerHTML=`<div class="content">
+<div class="ctrl-row">
+  <div class="ctrl-box"><label>Breite a (mm)</label><select id="${p}-a">${aOpts}</select></div>
+  <div class="ctrl-box"><label>Höhe b (mm)</label><select id="${p}-b">${bOpts}</select></div>
+  <div class="ctrl-box"><label>Werkstoff</label><select id="${p}-mat">${matOpts}</select></div>
+  <div class="ctrl-box narrow"><label>Menge</label><input type="number" id="${p}-qty" value="1" min="1"></div>
+</div>
+<div class="fm-toggle" id="${p}-fmtog" onclick="toggleFM('${p}','${reihe}')">
+  <div class="fm-sw"></div>
+  <span>Freimass — A × B (Außenmaß) eingeben</span>
+  <span style="font-size:9px;color:#8fa8c8;margin-left:auto">z.B. DN 1800×1050 → A=1892, B=1152</span>
+</div>
+<div id="${p}-fmrow" style="display:none;gap:8px;margin-bottom:10px" class="ctrl-row">
+  <div class="ctrl-box"><label>Außenmaß A (mm)</label><input type="number" id="${p}-fmA" value="1892" min="200" oninput="updRect('${p}','${reihe}')"></div>
+  <div class="ctrl-box"><label>Außenmaß B (mm)</label><input type="number" id="${p}-fmB" value="1152" min="200" oninput="updRect('${p}','${reihe}')"></div>
+  <div class="ctrl-box" style="background:#e8f5e2;border-color:#b0d89a"><label style="color:#2a5010">Kanalmaße (berechnet)</label><div id="${p}-fmcalc" style="font-size:13px;font-weight:700;color:#1a3a10;padding:6px 9px">—</div></div>
+</div>
+<div class="boh-panel">
+  <div class="boh-title">Profil & Bohrungspositionierung <span class="ptag" style="background:#3b6d11">DIN 24193 ${reihe}</span> <span class="ptag" style="background:#1a5fa8">4 Seiten individuell</span></div>
+  <!-- Profil: 3 Modi -->
+  <div class="profil-wrap">
+    <div class="pr-mode-row">
+      <label>Profilgröße:</label>
+      <div class="pr-tog on" id="${p}-pr-auto" onclick="setPrMode('${p}','auto','${reihe}')">Auto</div>
+      <div class="pr-tog" id="${p}-pr-list" onclick="setPrMode('${p}','list','${reihe}')">Liste</div>
+      <div class="pr-tog" id="${p}-pr-free" onclick="setPrMode('${p}','free','${reihe}')">Frei eingeben</div>
+    </div>
+    <div id="${p}-pr-dd" style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+      <select class="pr-sel" id="${p}-pr-sel" disabled onchange="updRect('${p}','${reihe}')">${prOpts}</select>
+      <span class="pr-auto-lbl" id="${p}-pr-auto-lbl">→ auto</span>
+    </div>
+    <div id="${p}-pr-fw" style="display:none" class="pr-free-fields">
+      <div class="pff"><label>b (Kante)</label><input type="number" id="${p}-pf-b" value="65" min="10" step="1" oninput="updRect('${p}','${reihe}')"><span class="pff-u">mm</span></div>
+      <div class="pff"><label>s (Stärke)</label><input type="number" id="${p}-pf-s" value="6" min="2" step="1" oninput="updRect('${p}','${reihe}')"><span class="pff-u">mm</span></div>
+      <div class="pff"><label>Ø Bohrung</label><input type="number" id="${p}-pf-dl" value="18" min="5" step="1" oninput="updRect('${p}','${reihe}')"><span class="pff-u">mm</span></div>
+      <div class="pff"><label>kg / m</label><input type="number" id="${p}-pf-gpm" value="5.50" min="0.1" step="0.1" oninput="updRect('${p}','${reihe}')"><span class="pff-u">kg/m</span></div>
+    </div>
+    <div class="pr-info" id="${p}-pr-info">—</div>
+  </div>
+  <!-- 4 Seiten -->
+  <div class="four-sides">
+    ${sideBox('O','Oben','si-o',2,116,115)}
+    ${sideBox('U','Unten','si-u',2,116,115)}
+    ${sideBox('L','Links','si-l',2,91,115)}
+    ${sideBox('R','Rechts','si-r',2,91,115)}
+  </div>
+  <div class="boh-total" id="${p}-btot">—</div>
+</div>
+<div class="main-panel">
+  <div class="card"><div class="slabel">Vorschau — mit Bohrungen</div><div class="preview-wrap"><svg id="${p}-fp" width="192" height="192"></svg></div><div style="text-align:center"><span class="dn-pill" style="background:#3b6d11" id="${p}-pill">— × —</span></div></div>
+  <div class="right-panel">
+    <div class="dims-card"><div class="slabel">Abmessungen</div><div class="dims-grid" id="${p}-dims"></div><div class="norm-note" id="${p}-note"></div></div>
+    <div class="btn-group"><button class="btn-dxf" style="background:#3b6d11" id="${p}-dxf"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v13M7 10l5 5 5-5"/><path d="M3 17v3a1 1 0 001 1h16a1 1 0 001-1v-3"/></svg> DXF (4 Layer)</button><button class="btn-print" onclick="window.print()">🖨 Drucken</button></div>
+  </div>
+</div>
+<div class="vsc-row">
+  <div class="vsc-cell"><div class="vsc-label"><span class="vsc-dot" style="background:#3b6d11"></span>Profil gesamt</div><div class="vsc-val" style="color:#1a3a10" id="${p}-bd">—</div><div class="vsc-sub" id="${p}-bk">—</div><div class="auf-row"><label>Materialaufschlag</label><input type="number" id="${p}-auf" value="20" min="0" step="1" oninput="renderP('${p}')"><span class="auf-unit">%</span><span class="auf-r" id="${p}-auf-r">—</span></div></div>
+  <div class="vsc-cell"><div class="vsc-label"><span class="vsc-dot" style="background:#1a5fa8"></span>Bohrungen</div><div class="vsc-val" id="${p}-fk">—</div><div class="vsc-sub" id="${p}-fp2">—</div></div>
+  <div class="vsc-cell"><div class="vsc-label"><span class="vsc-dot" style="background:#ef9f27"></span>Umfang</div><div class="vsc-val" id="${p}-vk">—</div><div class="vsc-sub" id="${p}-vp">Innenumfang</div></div>
+</div>
+<div class="bar-track"><div class="bar-g" id="${p}-bg" style="width:70%"></div><div class="bar-a2" id="${p}-ba2" style="width:30%"></div></div>
+<div class="slabel">Fertigungskosten</div>
+<div class="kosten-grid" id="${p}-kost"></div>
+<div class="sum-card" id="${p}-sum"></div>
+</div>`;
+
+  document.getElementById(`${p}-kost`).innerHTML=kH(p);
+  document.getElementById(`${p}-dxf`).addEventListener('click',()=>dxfRect(p));
+  ['a','b','mat'].forEach(id=>document.getElementById(`${p}-${id}`)?.addEventListener('change',()=>updRect(p,reihe)));
+  document.getElementById(`${p}-qty`).addEventListener('input',()=>renderP(p));
+  setTimeout(()=>{['lp','ba-s','ba-h','ba-r','eg-s','eg-h','eg-r','sw-s','sw-h','sw-r','lk-s','lk-h','lk-r','qs-s','qs-h','qs-r'].forEach(id=>{const el=document.getElementById(`${p}-${id}`);if(el)el.addEventListener('input',()=>renderP(p));});},200);
+  prModeMap[p]='auto';fmMap[p]=false;
+  ['O','U','L','R'].forEach(sid=>sideModeMap[`${p}_${sid}`]='rand');
+  updRect(p,reihe);
+}
+
+function toggleFM(p,reihe){
+  fmMap[p]=!fmMap[p];
+  document.getElementById(`${p}-fmtog`).classList.toggle('on',fmMap[p]);
+  document.getElementById(`${p}-fmrow`).style.display=fmMap[p]?'flex':'none';
+  updRect(p,reihe);
+}
+
+function setPrMode(p,m,reihe){
+  prModeMap[p]=m;
+  ['auto','list','free'].forEach(x=>document.getElementById(`${p}-pr-${x}`)?.classList.toggle('on',x===m));
+  document.getElementById(`${p}-pr-dd`).style.display=m==='free'?'none':'flex';
+  document.getElementById(`${p}-pr-fw`).style.display=m==='free'?'flex':'none';
+  const sel=document.getElementById(`${p}-pr-sel`);
+  sel.disabled=(m==='auto');
+  sel.style.background=m==='auto'?'#f0f0f0':'#fff';
+  sel.style.color=m==='auto'?'#aaa':'#1a2744';
+  sel.style.borderColor=m==='auto'?'#ddd':'#b0d89a';
+  updRect(p,reihe);
+}
+
+function setSideMode(p,sid,m,reihe){
+  sideModeMap[`${p}_${sid}`]=m;
+  ['sym','rand','fix'].forEach(x=>document.getElementById(`${p}-sm-${sid}-${x}`)?.classList.toggle('on',x===m));
+  document.getElementById(`${p}-re1-${sid}`).style.display=(m==='rand'||m==='fix')?'':'none';
+  document.getElementById(`${p}-rt-${sid}`).style.display=(m==='fix')?'':'none';
+  updRect(p,reihe);
+}
+
+function getProfil(p,reihe,rawA,rawB){
+  const m=prModeMap[p]||'auto';
+  if(m==='free'){
+    return{b:parseFloat(document.getElementById(`${p}-pf-b`)?.value)||65,s:parseFloat(document.getElementById(`${p}-pf-s`)?.value)||6,dl:parseFloat(document.getElementById(`${p}-pf-dl`)?.value)||18,gpm:parseFloat(document.getElementById(`${p}-pf-gpm`)?.value)||5.5,label:'frei eingegeben'};
+  }
+  const maxS=Math.max(rawA,rawB);
+  let key=m==='auto'?autoProfilKey(reihe,maxS):(document.getElementById(`${p}-pr-sel`)?.value||'35x35x4');
+  if(m==='auto'){const sel=document.getElementById(`${p}-pr-sel`);if(sel)Array.from(sel.options).forEach(o=>o.selected=(o.value===key));document.getElementById(`${p}-pr-auto-lbl`).textContent=`→ ${key.replace(/x/g,'×')}`;}
+  else document.getElementById(`${p}-pr-auto-lbl`).textContent='';
+  return{...RECT_PR[key]||RECT_PR['35x35x4'],label:key.replace(/x/g,'×')+' mm'};
+}
+
+function updRect(p,reihe){
+  const rawA=parseInt(document.getElementById(`${p}-a`)?.value)||400;
+  const rawB=parseInt(document.getElementById(`${p}-b`)?.value)||300;
+  const pr=getProfil(p,reihe,rawA,rawB);const profB=pr.b;
+  let a,b,aOD,bOD;
+  if(fmMap[p]){
+    aOD=parseInt(document.getElementById(`${p}-fmA`)?.value)||1892;
+    bOD=parseInt(document.getElementById(`${p}-fmB`)?.value)||1152;
+    a=aOD-2*profB;b=bOD-2*profB;
+    document.getElementById(`${p}-fmcalc`).textContent=`a=${a} · b=${b} mm`;
+  } else {a=rawA;b=rawB;aOD=a+2*profB;bOD=b+2*profB;}
+  document.getElementById(`${p}-pr-info`).innerHTML=`<strong>${aOD}×${bOD}</strong> Außenmaß · Profil <strong>${pr.label}</strong> · b=${profB}mm · <strong>${((2*(a+b)+4*profB)/1000).toFixed(2)} m</strong> · <strong>${((2*(a+b)+4*profB)/1000*pr.gpm).toFixed(2)} kg</strong>`;
+
+  // Seiten
+  const sides={};
+  ['O','U','L','R'].forEach(sid=>{
+    const seite=(sid==='O'||sid==='U')?a:b;
+    const m=sideModeMap[`${p}_${sid}`]||'rand';
+    const n=parseInt(document.getElementById(`${p}-n${sid}`)?.value)||1;
+    const e1=parseFloat(document.getElementById(`${p}-e1${sid}`)?.value)||80;
+    const t=parseFloat(document.getElementById(`${p}-t${sid}`)?.value)||150;
+    sides[sid]={m,n,e1,t};
+    const pos=calcSidePos(seite,m,n,e1,t);
+    const valid=pos.every(x=>Math.abs(x)<=seite/2+1);
+    document.getElementById(`${p}-warn-${sid}`).style.display=valid?'none':'block';
+    let calc='';
+    if(m==='sym')calc=`T=${(seite/(n+1)).toFixed(1)} mm`;
+    else if(m==='rand'){const step=n>1?(seite-2*e1)/(n-1):0;calc=`e₁=${e1} · T=${step.toFixed(1)}`;}
+    else calc=`${e1}…${(e1+t*(n-1)).toFixed(0)} mm · t=${t}`;
+    document.getElementById(`${p}-calc-${sid}`).textContent=calc;
+  });
+
+  const bohPts=buildBohPts(a,b,profB,sides);
+  const nTotal=bohPts.length;
+  const umfL=(2*(a+b)+4*profB)/1000;const bW=umfL*pr.gpm;
+  document.getElementById(`${p}-btot`).textContent=`Gesamt: ${nTotal} Bohrungen — Ø${pr.dl}mm — O:${sides.O.n} U:${sides.U.n} L:${sides.L.n} R:${sides.R.n}`;
+  document.getElementById(`${p}-pill`).textContent=fmMap[p]?`A=${aOD}×${bOD}`:`${a}×${b} mm`;
+  document.getElementById(`${p}-dims`).innerHTML=dc(a,'Breite a','mm')+dc(b,'Höhe b','mm')+dc(aOD,'Außen A','mm')+dc(bOD,'Außen B','mm')+dc(pr.label.split(' ')[0],'Profil','b×b×s')+dc(`Ø${pr.dl}`,'Boh.-Ø','mm')+dc(`${nTotal}×`,'Bohrungen','gesamt')+dc(bW.toFixed(2),'Gewicht','kg/Stk');
+  document.getElementById(`${p}-note`).textContent=`DIN 24193 ${reihe} · S235JR · Druckstufen 2,3,5,6 · DXF: 4 Layer`;
+  document.getElementById(`${p}-li`).innerHTML=`<strong>Profillänge: ${umfL.toFixed(2)} m</strong> · ${nTotal}× Bohrungen Ø${pr.dl} mm`;
+  curD[p]={type:'rect',reihe,a,b,aOD,bOD,profB,dl:pr.dl,bohPts,bW,ll:umfL,nu:70,bWlbl:`${umfL.toFixed(2)} m Profil`,bklbl:`${bW.toFixed(2)} kg/Stk`,fklbl:`${nTotal}× Ø${pr.dl}mm`,fp2lbl:`O:${sides.O.n} U:${sides.U.n} L:${sides.L.n} R:${sides.R.n}`,vklbl:`${(2*(a+b)/1000).toFixed(2)} m`,vplbl:'Innenumfang'};
+  drawRect(`${p}-fp`,a,b,profB,pr.dl,bohPts);
+  renderP(p);
+}
+
+// ── Runde Flansche ──
+const DIN_NORMS=[["R1T1","DIN 24154 R1 T1"],["R2T2","DIN 24154 R2 T2"],["R3","DIN 24154 R3"],["R4","DIN 24154 R4"],["R5","DIN 24154 R5"],["EN","EN 12220"]];
+const DB={
+R1T1:[[71,71,73,"25x4",103,9.5,4,"M8",0.23],[80,80,82,"25x4",112,9.5,4,"M8",0.26],[90,90,92,"25x4",122,9.5,4,"M8",0.28],[100,100,102,"25x4",132,9.5,4,"M8",0.30],[112,112,114,"25x4",144,9.5,4,"M8",0.33],[125,125,127,"25x4",157,9.5,4,"M8",0.37],[140,140,142,"25x4",172,9.5,6,"M8",0.40],[150,150,152,"25x4",185,9.5,6,"M8",0.42],[160,160,162,"25x4",192,9.5,6,"M8",0.45],[180,180,182,"25x4",212,9.5,6,"M8",0.50],[200,200,203,"25x4",233,9.5,6,"M8",0.55],[224,224,227,"25x4",257,9.5,6,"M8",0.61],[250,250,253,"25x4",283,9.5,6,"M8",0.67],[280,280,283,"30x4",317,9.5,8,"M8",0.91],[300,300,303,"30x4",339,9.5,8,"M8",0.97],[315,315,318,"30x4",352,9.5,8,"M8",1.01],[355,355,358,"30x4",392,9.5,8,"M8",1.13],[400,400,404,"30x4",438,9.5,8,"M8",1.27],[450,450,454,"30x4",488,9.5,8,"M8",1.42],[500,500,504,"30x4",538,9.5,8,"M8",1.56],[560,560,564,"35x4",600,9.5,12,"M8",2.04],[600,600,606,"35x4",641,9.5,12,"M8",2.19],[630,630,634,"35x4",670,9.5,12,"M8",2.28],[710,710,714,"35x4",750,9.5,12,"M8",2.56],[800,800,804,"35x4",840,9.5,16,"M8",2.86],[900,900,904,"35x4",940,9.5,16,"M8",3.21],[1000,1000,1005,"35x4",1041,9.5,16,"M8",3.56],[1120,1120,1125,"40x5",1169,9.5,24,"M8",5.68],[1250,1250,1255,"40x5",1299,9.5,24,"M8",6.32]],
+R2T2:[[71,71,73,"30x6",110,9.5,4,"M8",0.44],[80,80,82,"30x6",118,9.5,4,"M8",0.48],[90,90,92,"30x6",128,9.5,4,"M8",0.53],[100,100,102,"30x6",139,9.5,4,"M8",0.57],[112,112,114,"30x6",151,9.5,4,"M8",0.63],[125,125,127,"30x6",165,9.5,4,"M8",0.68],[140,140,142,"35x6",182,11.5,8,"M10",0.88],[150,150,152,"35x6",191,11.5,8,"M10",0.93],[160,160,162,"35x6",200,11.5,8,"M10",0.98],[180,180,182,"35x6",219,11.5,8,"M10",1.09],[200,200,203,"35x6",241,11.5,8,"M10",1.19],[224,224,227,"35x6",265,11.5,8,"M10",1.32],[250,250,253,"35x6",292,11.5,8,"M10",1.45],[280,280,283,"40x8",332,11.5,8,"M10",2.50],[300,300,303,"40x8",349,11.5,8,"M10",2.66],[315,315,318,"40x8",366,11.5,8,"M10",2.77],[355,355,358,"40x8",405,11.5,8,"M10",3.09],[400,400,404,"40x8",448,11.5,12,"M10",3.43],[450,450,454,"40x8",497,11.5,12,"M10",3.82],[500,500,504,"40x8",551,11.5,12,"M10",4.22],[560,560,564,"50x8",629,14.0,16,"M12",5.90],[600,600,605,"50x8",665,14.0,16,"M12",6.31],[630,630,634,"50x8",698,14.0,16,"M12",6.59],[710,710,714,"50x8",775,14.0,16,"M12",7.38],[800,800,804,"50x8",861,14.0,24,"M12",8.19],[900,900,904,"50x8",958,14.0,24,"M12",9.18],[1000,1000,1005,"50x8",1067,14.0,24,"M12",10.18],[1120,1120,1125,"60x10",1200,18.0,32,"M16",16.90],[1250,1250,1255,"60x10",1337,18.0,32,"M16",18.82],[1400,1400,1405,"60x10",1475,18.0,32,"M16",21.04],[1600,1600,1605,"60x10",1675,18.0,40,"M16",23.84],[1800,1800,1805,"60x10",1875,18.0,40,"M16",26.80],[2000,2000,2005,"60x10",2073,18.0,40,"M16",29.76]],
+R3:[[63,66,68,"20x4",92,7.0,4,"M6",0.17],[71,74,76,"20x4",100,7.0,4,"M6",0.19],[80,82,84,"20x4",108,7.0,4,"M6",0.20],[90,92,94,"20x4",118,7.0,4,"M6",0.22],[100,103,105,"20x4",129,7.0,4,"M6",0.24],[112,115,117,"20x4",141,7.0,4,"M6",0.27],[125,129,131,"20x4",155,7.0,4,"M6",0.29],[140,144,146,"25x5",176,7.0,6,"M6",0.52],[150,153,155,"25x5",185,7.0,6,"M6",0.55],[160,162,164,"25x5",194,7.0,6,"M6",0.57],[180,181,183,"25x5",213,7.0,6,"M6",0.63],[200,203,205,"25x5",235,7.0,6,"M6",0.70],[224,227,229,"25x5",259,7.0,6,"M6",0.77],[250,254,256,"25x5",286,7.0,6,"M6",0.86],[280,286,288,"30x6",322,9.5,8,"M8",1.39],[300,303,305,"30x6",339,9.5,8,"M8",1.46],[315,320,322,"30x6",356,9.5,8,"M8",1.54],[355,359,361,"30x6",395,9.5,8,"M8",1.71],[400,402,404,"30x6",438,9.5,12,"M8",1.89],[450,451,453,"30x6",487,9.5,12,"M8",2.10],[500,505,507,"30x6",541,9.5,12,"M8",2.34],[560,567,569,"35x6",605,11.5,16,"M10",3.05],[630,636,638,"35x6",674,11.5,16,"M10",3.41],[710,713,715,"35x6",751,11.5,16,"M10",3.81],[800,799,801,"35x6",837,11.5,24,"M10",4.21],[900,896,898,"35x6",934,11.5,24,"M10",4.72],[1000,1005,1007,"35x6",1043,11.5,24,"M10",5.28]],
+R4:[[63,66,68,"30x6",102,9.5,4,"M8",0.42],[71,74,76,"30x6",110,9.5,4,"M8",0.46],[80,82,84,"30x6",118,9.5,4,"M8",0.49],[90,92,94,"30x6",128,9.5,4,"M8",0.54],[100,103,105,"30x6",139,9.5,4,"M8",0.59],[112,115,117,"30x6",151,9.5,4,"M8",0.64],[125,129,131,"30x6",165,9.5,4,"M8",0.70],[140,144,146,"35x6",182,11.5,8,"M10",0.90],[150,153,155,"35x6",191,11.5,8,"M10",0.95],[160,162,164,"35x6",200,11.5,8,"M10",0.99],[180,181,183,"35x6",219,11.5,8,"M10",1.09],[200,203,205,"35x6",241,11.5,8,"M10",1.20],[224,227,229,"35x6",265,11.5,8,"M10",1.33],[250,254,256,"35x6",292,11.5,8,"M10",1.47],[280,286,288,"40x8",332,11.5,8,"M10",2.54],[300,303,305,"40x8",349,11.5,8,"M10",2.67],[315,320,322,"40x8",366,11.5,8,"M10",2.81],[355,359,361,"40x8",405,11.5,8,"M10",3.11],[400,402,404,"40x8",448,11.5,12,"M10",3.43],[450,451,453,"40x8",497,11.5,12,"M10",3.81],[500,505,507,"40x8",551,11.5,12,"M10",4.24],[560,567,569,"50x8",629,14.0,16,"M12",5.95],[630,636,638,"50x8",698,14.0,16,"M12",6.63],[710,713,715,"50x8",775,14.0,16,"M12",7.39],[800,799,801,"50x8",861,14.0,24,"M12",8.16],[900,896,898,"50x8",958,14.0,24,"M12",9.12],[1000,1005,1007,"50x8",1067,14.0,24,"M12",10.20]],
+R5:[[71,71,73,"25x4",100,7.0,4,"M6",0.24],[80,80,82,"25x4",108,7.0,4,"M6",0.26],[90,90,92,"25x4",118,7.0,4,"M6",0.28],[100,100,102,"25x4",129,7.0,4,"M6",0.31],[112,112,114,"25x4",141,7.0,4,"M6",0.34],[125,125,127,"25x4",155,7.0,4,"M6",0.37],[140,140,142,"30x4",176,7.0,6,"M6",0.50],[150,150,152,"30x4",185,7.0,6,"M6",0.53],[160,160,162,"30x4",194,7.0,6,"M6",0.56],[180,180,182,"30x4",213,7.0,6,"M6",0.62],[200,200,203,"30x4",235,7.0,6,"M6",0.68],[224,224,227,"30x4",259,7.0,6,"M6",0.75],[250,250,253,"30x4",286,7.0,6,"M6",0.83],[280,280,283,"35x5",322,9.5,8,"M8",1.35],[300,300,303,"35x5",342,9.5,8,"M8",1.44],[315,315,318,"35x5",356,9.5,8,"M8",1.50],[355,355,358,"35x5",395,9.5,8,"M8",1.67],[400,400,404,"35x5",438,9.5,12,"M8",1.86],[450,450,454,"35x5",487,9.5,12,"M8",2.08],[500,500,504,"35x5",541,9.5,12,"M8",2.29],[560,560,564,"45x6",629,11.5,16,"M10",3.98],[600,600,606,"45x6",666,11.5,16,"M10",4.26],[630,630,636,"45x6",698,11.5,16,"M10",4.46],[710,710,714,"45x6",775,11.5,16,"M10",4.98],[800,800,804,"45x6",861,11.5,24,"M10",5.54],[900,900,904,"45x6",958,11.5,24,"M10",6.20],[1000,1000,1005,"45x6",1067,11.5,24,"M10",6.87]],
+EN:[[80,80,82,"25x4",112,9.5,4,"M8",0.26],[100,100,102,"25x4",132,9.5,4,"M8",0.30],[125,125,127,"25x4",157,9.5,4,"M8",0.37],[150,150,152,"25x4",182,9.5,6,"M8",0.42],[160,160,162,"25x4",192,9.5,6,"M8",0.45],[200,200,203,"25x4",233,9.5,6,"M8",0.55],[250,250,253,"25x4",283,9.5,6,"M8",0.67],[315,315,318,"30x4",352,9.5,8,"M8",1.01],[355,355,358,"30x4",392,9.5,8,"M8",1.13],[400,400,404,"30x4",438,9.5,8,"M8",1.27],[450,450,454,"30x4",488,9.5,8,"M8",1.42],[500,500,504,"30x4",538,9.5,8,"M8",1.56],[560,560,564,"35x4",600,9.5,12,"M8",2.04],[630,630,634,"35x4",670,9.5,12,"M8",2.28],[710,710,714,"35x4",750,9.5,12,"M8",2.56],[800,800,804,"35x4",840,9.5,16,"M8",2.86],[900,900,904,"35x4",940,9.5,16,"M8",3.21],[1000,1000,1005,"35x4",1041,9.5,16,"M8",3.56],[1120,1120,1125,"40x5",1169,9.5,24,"M8",5.68],[1250,1250,1255,"40x5",1299,9.5,24,"M8",6.32]]};
+
+const EN1092={PN16:[[50,165,125,4,18,14],[65,185,145,8,18,16],[80,200,160,8,18,16],[100,220,180,8,18,18],[125,250,210,8,18,20],[150,285,240,8,22,20],[200,340,295,12,22,22],[250,405,355,12,26,24],[300,460,410,12,26,24],[400,580,525,16,30,28]],PN25:[[50,165,125,4,18,16],[80,200,160,8,18,18],[100,235,190,8,22,22],[150,300,250,8,26,24],[200,360,310,12,26,28],[300,485,430,16,30,34],[400,620,550,16,33,38]],PN40:[[50,165,125,4,18,18],[80,200,160,8,18,20],[100,235,190,8,22,24],[150,300,250,8,26,28],[200,375,320,12,30,34],[300,515,450,16,33,42]]};
+const DIN28034_ALL=[[50,165,125,4,18,12],[80,200,160,8,18,16],[100,220,180,8,18,18],[150,285,240,8,22,20],[200,340,295,8,22,24],[300,445,400,12,22,28],[400,565,515,16,26,32],[500,670,620,20,26,36],[800,1015,955,24,33,48],[1000,1230,1160,28,36,56]];
+const ANSI=[[15,"1/2\"",[88.9,60.3,4,15.9,14],[95.2,66.7,4,15.9,16]],[25,"1\"",[108,79.4,4,15.9,16],[123.8,88.9,4,19,18]],[50,"2\"",[152.4,120.6,4,19,18],[165.1,127,8,19,20]],[80,"3\"",[190.5,152.4,4,19,20],[209.6,168.3,8,22.2,24]],[100,"4\"",[228.6,190.5,8,19,22],[254,200,8,22.2,26]],[150,"6\"",[279.4,241.3,8,22.2,26],[317.5,269.9,12,22.2,30]],[200,"8\"",[342.9,298.4,8,22.2,28],[381,330.2,12,25.4,34]],[300,"12\"",[482.6,431.8,12,25.4,32],[520.7,450.9,16,31.8,42]],[400,"16\"",[596.9,539.7,16,28.6,38],[647.7,571.5,20,34.9,50]],[600,"24\"",[812.8,749.3,20,34.9,46],[914,812.8,24,41.3,62]]];
+const DIN2501={PN16:[[80,200,160,8,18,16],[100,220,180,8,18,18],[150,285,240,8,22,20],[200,340,295,12,22,22],[300,460,410,12,26,24],[400,580,525,16,30,28],[500,715,650,20,33,32]],PN40:[[50,165,125,4,18,18],[80,200,160,8,18,22],[100,235,190,8,22,24],[150,300,250,8,26,30],[200,375,320,12,30,36],[300,515,450,16,33,48]]};
+
+function rundPane(paneId,p,color,extraCtrl){
+  document.getElementById('pane-'+paneId).innerHTML=`<div class="content">
+<div class="ctrl-row">${extraCtrl}</div>
+<div class="main-panel">
+  <div class="card"><div class="slabel">Vorschau</div><div class="preview-wrap"><svg id="${p}-fp" width="192" height="192"></svg></div><div style="text-align:center"><span class="dn-pill" style="background:${color}" id="${p}-pill">DN —</span></div></div>
+  <div class="right-panel">
+    <div class="dims-card"><div class="slabel">Abmessungen</div><div class="dims-grid" id="${p}-dims"></div><div class="norm-note" id="${p}-note"></div></div>
+    <div class="btn-group"><button class="btn-dxf" style="background:${color}" id="${p}-dxf"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v13M7 10l5 5 5-5"/><path d="M3 17v3a1 1 0 001 1h16a1 1 0 001-1v-3"/></svg> DXF exportieren</button><button class="btn-print" onclick="window.print()">🖨 Drucken</button></div>
+  </div>
+</div>
+<div class="vsc-row"><div class="vsc-cell"><div class="vsc-label"><span class="vsc-dot" style="background:${color}"></span>Blech gesamt</div><div class="vsc-val" id="${p}-bd">—</div><div class="vsc-sub" id="${p}-bk">—</div><div class="auf-row"><label>Materialaufschlag</label><input type="number" id="${p}-auf" value="20" min="0" step="1" oninput="renderP('${p}')"><span class="auf-unit">%</span><span class="auf-r" id="${p}-auf-r">—</span></div></div>
+<div class="vsc-cell"><div class="vsc-label"><span class="vsc-dot" style="background:#639922"></span>Flansch</div><div class="vsc-val" id="${p}-fk">—</div><div class="vsc-sub" id="${p}-fp2">—</div></div>
+<div class="vsc-cell"><div class="vsc-label"><span class="vsc-dot" style="background:#ef9f27"></span>Verschnitt</div><div class="vsc-val" id="${p}-vk">—</div><div class="vsc-sub" id="${p}-vp">—</div></div></div>
+<div class="bar-track"><div class="bar-g" id="${p}-bg" style="width:50%"></div><div class="bar-a2" id="${p}-ba2" style="width:50%"></div></div>
+<div class="slabel">Fertigungskosten</div><div class="kosten-grid" id="${p}-kost"></div><div class="sum-card" id="${p}-sum"></div>
+</div>`;
+  document.getElementById(`${p}-kost`).innerHTML=kH(p);
+  setTimeout(()=>{['lp','ba-s','ba-h','ba-r','eg-s','eg-h','eg-r','sw-s','sw-h','sw-r','lk-s','lk-h','lk-r','qs-s','qs-h','qs-r'].forEach(id=>{const el=document.getElementById(`${p}-${id}`);if(el)el.addEventListener('input',()=>renderP(p));});},200);
+}
+
+function setRund(p,dn,D,k,n,dl,iD,s,dimsH,noteH,color,label){
+  const bS=Math.ceil(D);const bW=(bS*bS/1e6)*s*DICHTE;
+  const fF=Math.PI*((D/2)**2-(iD>0?(iD/2)**2:0))-n*Math.PI*(dl/2)**2;
+  const fW=fF/1e6*s*DICHTE;const nu=fF/(bS*bS)*100;
+  const ll=(2*Math.PI*(D/2)+n*2*Math.PI*(dl/2)+(iD>0?2*Math.PI*(iD/2):0))/1000;
+  curD[p]={type:'rund',bW,ll,nu,D,k,n,dl,iD,s,dn,bWlbl:`${bS}×${bS} mm`,bklbl:`${bW.toFixed(3)} kg/Stk`,fklbl:`${fW.toFixed(3)} kg/Stk`,fp2lbl:`Nutzungsgrad: ${nu.toFixed(1)} %`,vklbl:`${(bW-fW).toFixed(3)} kg/Stk`,vplbl:`Verschnitt: ${(100-nu).toFixed(1)} %`};
+  document.getElementById(`${p}-pill`).textContent=label;
+  document.getElementById(`${p}-dims`).innerHTML=dimsH;
+  document.getElementById(`${p}-note`).innerHTML=noteH;
+  document.getElementById(`${p}-li`).innerHTML=`<strong>Schnittlänge gesamt: ${ll.toFixed(3)} m</strong>`;
+  drawRund(`${p}-fp`,D,k,n,dl,iD);renderP(p);
+}
+
+function dxfRund(p){
+  const c=curD[p];if(!c||!c.D)return;
+  let dxf="0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n9\n$INSUNITS\n70\n4\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n";
+  const ci=(cx,cy,r)=>`0\nCIRCLE\n8\n0\n10\n${cx.toFixed(4)}\n20\n${cy.toFixed(4)}\n30\n0.0\n40\n${r.toFixed(4)}\n`;
+  dxf+=ci(0,0,c.D/2);if(c.iD>0)dxf+=ci(0,0,c.iD/2);
+  for(let i=0;i<c.n;i++){const a=2*Math.PI*i/c.n-Math.PI/2;dxf+=ci(Math.cos(a)*c.k/2,Math.sin(a)*c.k/2,c.dl/2);}
+  dxf+="0\nENDSEC\n0\nEOF\n";
+  const blob=new Blob([dxf],{type:'application/dxf'});const url=URL.createObjectURL(blob);const el=document.createElement('a');el.href=url;el.download=`${p}_DN${c.dn}.dxf`;el.click();URL.revokeObjectURL(url);
+}
+
+function setupR1(){const p='r1',color='#1a2744';rundPane('r1',p,color,`<div class="ctrl-box"><label>Norm / Reihe</label><select id="${p}-norm">${DIN_NORMS.map(([v,t])=>`<option value="${v}">${t}</option>`).join('')}</select></div><div class="ctrl-box"><label>Nennweite DN</label><select id="${p}-nw"></select></div><div class="ctrl-box"><label>Werkstoff</label><select id="${p}-mat">${matOpts}</select></div><div class="ctrl-box narrow"><label>Menge</label><input type="number" id="${p}-qty" value="1" min="1"></div>`);function pop(){const n=document.getElementById(`${p}-norm`).value;const s=document.getElementById(`${p}-nw`);s.innerHTML='';(DB[n]||[]).forEach(r=>{const o=document.createElement('option');o.value=r[0];o.textContent='DN '+r[0];s.appendChild(o);});upd();}function upd(){const n=document.getElementById(`${p}-norm`).value;const nw=parseInt(document.getElementById(`${p}-nw`).value);const rows=DB[n]||[];const row=rows.find(r=>r[0]===nw)||rows[0];if(!row)return;const[dn,da,d2,bxs,k,d4,nl,schr,gew]=row;const bv=parseInt(bxs);const sv=parseInt(bxs.split('x')[1]);const OD=da/2+bv;curD[p]={...curD[p],D:OD*2,k,n:nl,dl:d4,iD:d2,s:sv,dn};setRund(p,dn,OD*2,k,nl,d4,d2,sv,dc(dn,'Nennweite','DN')+dc(da,'Rohr-Außen','d₁')+dc(d2,'Innen-Ø','d₂')+dc(k,'Lochkreis','k')+dc(d4,'Loch Ø','d₄')+dc(nl,'Lochanzahl','Stk')+dc(bxs,'b×s','mm')+dc(gew,'Gewicht','kg'),`S235JRG2 · Schraube: ${schr}`,color,`DN ${dn} · ${Math.ceil(OD*2)}×${Math.ceil(OD*2)} mm`);}document.getElementById(`${p}-norm`).addEventListener('change',pop);document.getElementById(`${p}-nw`).addEventListener('change',upd);document.getElementById(`${p}-mat`).addEventListener('change',()=>renderP(p));document.getElementById(`${p}-qty`).addEventListener('input',()=>renderP(p));document.getElementById(`${p}-dxf`).addEventListener('click',()=>dxfRund(p));pop();}
+function setupR2(){const p='r2',color='#1a5fa8';rundPane('r2',p,color,`<div class="ctrl-box"><label>Druckstufe PN</label><select id="${p}-pn"><option value="PN16" selected>PN 16</option><option value="PN25">PN 25</option><option value="PN40">PN 40</option></select></div><div class="ctrl-box"><label>Nennweite DN</label><select id="${p}-nw"></select></div><div class="ctrl-box"><label>Werkstoff</label><select id="${p}-mat">${matOpts}</select></div><div class="ctrl-box narrow"><label>Menge</label><input type="number" id="${p}-qty" value="1" min="1"></div>`);function pop(){const pn=document.getElementById(`${p}-pn`).value;const s=document.getElementById(`${p}-nw`);s.innerHTML='';(EN1092[pn]||[]).forEach(r=>{const o=document.createElement('option');o.value=r[0];o.textContent='DN '+r[0];s.appendChild(o);});upd();}function upd(){const pn=document.getElementById(`${p}-pn`).value;const nw=parseInt(document.getElementById(`${p}-nw`).value);const rows=EN1092[pn]||[];const row=rows.find(r=>r[0]===nw)||rows[0];if(!row)return;const[dn,D,k,n,dl,s]=row;const iD=Math.round(dn*0.92);curD[p]={...curD[p],D,k,n,dl,iD,s,dn};setRund(p,dn,D,k,n,dl,iD,s,dc(dn,'Nennweite','DN')+dc(D,'Außen-Ø','mm')+dc(k,'Lochkreis','mm')+dc(n,'Lochanzahl','Stk')+dc(dl,'Loch Ø','mm')+dc(s,'Blattstärke','mm')+dc(pn,'Nenndruck','')+dc('Typ 01/11','Typ','EN 1092-1'),`EN 1092-1 · ${pn}`,color,`DN ${dn} · ${pn}`);}document.getElementById(`${p}-pn`).addEventListener('change',pop);document.getElementById(`${p}-nw`).addEventListener('change',upd);document.getElementById(`${p}-mat`).addEventListener('change',()=>renderP(p));document.getElementById(`${p}-qty`).addEventListener('input',()=>renderP(p));document.getElementById(`${p}-dxf`).addEventListener('click',()=>dxfRund(p));pop();}
+function setupR3(){const p='r3',color='#3b6d11';rundPane('r3',p,color,`<div class="ctrl-box"><label>Druckstufe PN</label><select id="${p}-pn"><option value="PN10" selected>PN 10</option><option value="PN16">PN 16</option><option value="PN25">PN 25</option><option value="PN40">PN 40</option></select></div><div class="ctrl-box"><label>Nennweite DN</label><select id="${p}-nw"></select></div><div class="ctrl-box"><label>Werkstoff</label><select id="${p}-mat">${matOpts}</select></div><div class="ctrl-box narrow"><label>Menge</label><input type="number" id="${p}-qty" value="1" min="1"></div>`);function pop(){const s=document.getElementById(`${p}-nw`);s.innerHTML='';DIN28034_ALL.forEach(r=>{const o=document.createElement('option');o.value=r[0];o.textContent='DN '+r[0];s.appendChild(o);});upd();}function upd(){const pn=document.getElementById(`${p}-pn`).value;const nw=parseInt(document.getElementById(`${p}-nw`).value);const row=DIN28034_ALL.find(r=>r[0]===nw)||DIN28034_ALL[0];const[dn,D,k,n,dl,s]=row;const iD=Math.round(dn*0.95);curD[p]={...curD[p],D,k,n,dl,iD,s,dn};setRund(p,dn,D,k,n,dl,iD,s,dc(dn,'Nennweite','DN')+dc(D,'Außen-Ø','mm')+dc(k,'Lochkreis','mm')+dc(n,'Lochanzahl','Stk')+dc(dl,'Loch Ø','mm')+dc(s,'Blattstärke','mm')+dc('DIN 28034','Norm','')+dc('Apparatebau','Typ',''),`DIN 28034 · ${pn}`,color,`DN ${dn} · DIN 28034`);}document.getElementById(`${p}-pn`).addEventListener('change',upd);document.getElementById(`${p}-nw`).addEventListener('change',upd);document.getElementById(`${p}-mat`).addEventListener('change',()=>renderP(p));document.getElementById(`${p}-qty`).addEventListener('input',()=>renderP(p));document.getElementById(`${p}-dxf`).addEventListener('click',()=>dxfRund(p));pop();}
+function setupR4(){const p='r4',color='#ba7517';rundPane('r4',p,color,`<div class="ctrl-box"><label>Pressure Class</label><select id="${p}-cls"><option value="C150">Class 150</option><option value="C300">Class 300</option></select></div><div class="ctrl-box"><label>Nennweite DN/NPS</label><select id="${p}-nw">${ANSI.map(r=>`<option value="${r[0]}">DN ${r[0]} (${r[1]})</option>`).join('')}</select></div><div class="ctrl-box"><label>Werkstoff</label><select id="${p}-mat">${matOpts}</select></div><div class="ctrl-box narrow"><label>Menge</label><input type="number" id="${p}-qty" value="1" min="1"></div>`);function upd(){const cls=document.getElementById(`${p}-cls`).value;const nw=parseInt(document.getElementById(`${p}-nw`).value);const row=ANSI.find(r=>r[0]===nw)||ANSI[0];const[dn,nps,c150,c300]=row;const cd=cls==='C150'?c150:c300;const[D,k,n,dl,s]=cd;const iD=Math.round(dn*0.93);curD[p]={...curD[p],D,k,n,dl,iD,s,dn};setRund(p,dn,D,k,n,dl,iD,s,dc(dn,'DN/NPS','ASME')+dc(nps,'NPS','Zoll')+dc(D.toFixed(1),'Außen-Ø','mm')+dc(k.toFixed(1),'Lochkreis','mm')+dc(n,'Lochanzahl','Stk')+dc(dl.toFixed(1),'Loch Ø','mm')+dc(s,'Blattstärke','mm')+dc(cls,'Class','ASME'),`ANSI/ASME B16.5 · ${cls}`,color,`DN ${dn} (${nps}) · ${cls}`);}document.getElementById(`${p}-cls`).addEventListener('change',upd);document.getElementById(`${p}-nw`).addEventListener('change',upd);document.getElementById(`${p}-mat`).addEventListener('change',()=>renderP(p));document.getElementById(`${p}-qty`).addEventListener('input',()=>renderP(p));document.getElementById(`${p}-dxf`).addEventListener('click',()=>dxfRund(p));upd();}
+function setupR5(){const p='r5',color='#a32d2d';rundPane('r5',p,color,`<div class="ctrl-box"><label>Druckstufe PN</label><select id="${p}-pn"><option value="PN16" selected>PN 16</option><option value="PN40">PN 40</option></select></div><div class="ctrl-box"><label>Nennweite DN</label><select id="${p}-nw"></select></div><div class="ctrl-box"><label>Werkstoff</label><select id="${p}-mat">${matOpts}</select></div><div class="ctrl-box narrow"><label>Menge</label><input type="number" id="${p}-qty" value="1" min="1"></div>`);function pop(){const pn=document.getElementById(`${p}-pn`).value;const s=document.getElementById(`${p}-nw`);s.innerHTML='';(DIN2501[pn]||[]).forEach(r=>{const o=document.createElement('option');o.value=r[0];o.textContent='DN '+r[0];s.appendChild(o);});upd();}function upd(){const pn=document.getElementById(`${p}-pn`).value;const nw=parseInt(document.getElementById(`${p}-nw`).value);const rows=DIN2501[pn]||[];const row=rows.find(r=>r[0]===nw)||rows[0];if(!row)return;const[dn,D,k,n,dl,s]=row;const iD=Math.round(dn*0.93);curD[p]={...curD[p],D,k,n,dl,iD,s,dn};setRund(p,dn,D,k,n,dl,iD,s,dc(dn,'Nennweite','DN')+dc(D,'Außen-Ø','mm')+dc(k,'Lochkreis','mm')+dc(n,'Lochanzahl','Stk')+dc(dl,'Loch Ø','mm')+dc(s,'Blattstärke','mm')+dc(pn,'Nenndruck','')+dc('DIN 2501','Referenz','→ EN 1092-1'),`DIN 2501 · ${pn} · entspricht EN 1092-1`,color,`DN ${dn} · ${pn}`);}document.getElementById(`${p}-pn`).addEventListener('change',pop);document.getElementById(`${p}-nw`).addEventListener('change',upd);document.getElementById(`${p}-mat`).addEventListener('change',()=>renderP(p));document.getElementById(`${p}-qty`).addEventListener('input',()=>renderP(p));document.getElementById(`${p}-dxf`).addEventListener('click',()=>dxfRund(p));pop();}
+
+setTimeout(()=>{
+  setupR1();setupR2();setupR3();setupR4();setupR5();
+  setupRect('q1','q1','R1');
+  setupRect('q2','q2','R2');
+  setupRect('q3','q3','R3');
+},60);
+</script>
