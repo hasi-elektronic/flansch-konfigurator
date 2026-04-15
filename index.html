@@ -166,235 +166,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-backgrou
 .f-txt{font-size:11px;color:#cdf0fb;line-height:1.5}.f-txt strong{color:#fff;font-weight:600}
 .f-r{font-size:10px;color:#9dddf0}
 
-/* === UNIFIED MODULE NAVIGATION === */
-.mtab{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border:none;background:rgba(51,175,226,0.12);color:#0e8bbf;cursor:pointer;border-radius:7px;font-size:12px;font-weight:700;transition:all .15s;border:1.5px solid rgba(51,175,226,0.35);white-space:nowrap;font-family:inherit;}
-.mtab.active{background:#33afe2;color:#fff;border-color:#33afe2;}
-.mtab:hover:not(.active){background:rgba(51,175,226,0.22);border-color:#33afe2;}
-.modpane{display:none !important;}
-.modpane.active{display:block !important;}
-
-
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-  :root {
-    --blue:#1B5E9E;--blue-d:#14486F;--blue-l:#2979C9;--blue-bg:rgba(27,94,158,0.06);
-    --gray:#6D6E71;--gray-l:#9EA0A3;--gray-xl:#C8C9CC;--gray-bg:#F5F6F7;
-    --white:#FFFFFF;--bg:#F8F9FA;--sf:#FFFFFF;--border:#E2E4E8;
-    --tx:#1A1A2E;--mu:#6D6E71;--ok:#2E7D32;--wa:#E65100;--da:#C62828;
-    --rd:8px;--shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.06);
-    --shadow-lg:0 4px 12px rgba(0,0,0,0.1),0 2px 4px rgba(0,0,0,0.06);
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  #mod-drueckteile {font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
-  #mod-drueckteile .app{max-width:1400px;margin:0 auto;padding:20px}
-
-  /* Header */
-  #mod-drueckteile .hdr{display:flex;align-items:center;gap:16px;padding:16px 24px;background:var(--blue);border-radius:var(--rd);margin-bottom:20px;box-shadow:var(--shadow-lg)}
-  .hdr-logo{width:48px;height:48px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--blue);font-size:1.1rem;flex-shrink:0}
-  .hdr-text h1{font-size:1.3rem;color:#fff;font-weight:600;letter-spacing:-.3px}
-  .hdr-text p{color:rgba(255,255,255,.75);font-size:.8rem;margin-top:2px;font-weight:300}
-  .hdr-badge{margin-left:auto;background:rgba(255,255,255,.15);color:#fff;padding:4px 12px;border-radius:20px;font-size:.7rem;font-weight:500;letter-spacing:.3px}
-
-  /* Main Tabs */
-  #mod-drueckteile .tabs{display:flex;gap:2px;margin-bottom:20px;background:var(--sf);padding:4px;border-radius:var(--rd);box-shadow:var(--shadow);border:1px solid var(--border)}
-  #mod-drueckteile .tab{flex:1;padding:10px 16px;border:none;background:transparent;color:var(--mu);cursor:pointer;border-radius:6px;font-size:.82rem;font-weight:500;transition:all .2s;font-family:inherit}
-  #mod-drueckteile .tab.active{background:var(--blue);color:#fff;box-shadow:0 2px 4px rgba(27,94,158,.3)}
-  #mod-drueckteile .tab:hover:not(.active){color:var(--tx);background:var(--gray-bg)}
-
-  /* Sub-Tabs */
-  #mod-drueckteile .sub-tabs{display:flex;gap:0;margin:0 0 16px;border-bottom:2px solid var(--border)}
-  #mod-drueckteile .sub-tab{padding:8px 20px;border:none;background:transparent;color:var(--mu);cursor:pointer;font-size:.78rem;font-weight:600;transition:all .2s;font-family:inherit;border-bottom:2px solid transparent;margin-bottom:-2px;letter-spacing:.2px;text-transform:uppercase}
-  #mod-drueckteile .sub-tab.active{color:var(--blue);border-bottom-color:var(--blue)}
-  #mod-drueckteile .sub-tab:hover:not(.active){color:var(--tx);background:var(--gray-bg)}
-
-  /* Compact info cards */
-  #mod-drueckteile .info-grid{display:grid;gap:8px;margin-bottom:12px}
-  #mod-drueckteile .info-card{background:var(--sf);border:1px solid var(--border);border-radius:var(--rd);overflow:hidden}
-  .info-card-header{padding:4px 10px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:#fff}
-  .info-card-#mod-drueckteile {padding:8px 10px}
-  .info-row{display:flex;align-items:center;gap:6px;padding:2px 0;font-size:.78rem}
-  .info-row .info-lbl{color:var(--mu);font-size:.68rem;font-weight:600;min-width:70px;text-transform:uppercase;letter-spacing:.2px}
-  .info-row .info-val{flex:1;font-weight:500;color:var(--tx)}
-  .info-row .info-val input,.info-row .info-val select{width:100%;border:none;background:transparent;font-size:.8rem;font-family:inherit;color:var(--tx);padding:1px 0;outline:none}
-  .info-row .info-val input:focus{background:var(--blue-bg);border-radius:3px}
-
-  /* Material badge */
-  .mat-badge{display:inline-flex;align-items:center;gap:4px;background:var(--blue-bg);border:1px solid rgba(27,94,158,.2);border-radius:20px;padding:2px 10px;font-size:.72rem;font-weight:600;color:var(--blue)}
-  .mat-badge select{border:none;background:transparent;font-size:.78rem;font-weight:600;color:var(--blue);font-family:inherit;outline:none;cursor:pointer}
-
-  /* Grid */
-  #mod-drueckteile .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-  @media(max-width:900px){#mod-drueckteile .grid{grid-template-columns:1fr}}
-  .grid-full{grid-template-columns:1fr}
-
-  /* Cards */
-  #mod-drueckteile .card{background:var(--sf);border-radius:var(--rd);padding:20px;border:1px solid var(--border);box-shadow:var(--shadow)}
-  #mod-drueckteile .card h3{font-size:.9rem;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:8px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
-  .card h3 .ico{width:20px;height:20px;background:var(--blue-bg);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.7rem}
-
-  /* Form */
-  #mod-drueckteile .fr{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-  #mod-drueckteile .fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
-  #mod-drueckteile .fg{display:flex;flex-direction:column;gap:4px}
-  #mod-drueckteile .fg.full{grid-column:1/-1}
-  .fg label{font-size:.72rem;color:var(--mu);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
-  .fg input,.fg select{padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--tx);font-size:.88rem;outline:none;transition:all .2s;font-family:inherit}
-  .fg input:focus,.fg select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,94,158,.1)}
-
-  /* Results grid */
-  #mod-drueckteile .rg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  #mod-drueckteile .ri{background:var(--bg);padding:10px 14px;border-radius:6px;border:1px solid var(--border)}
-  .ri .lb{font-size:.68rem;color:var(--mu);text-transform:uppercase;letter-spacing:.4px;font-weight:600}
-  .ri .vl{font-size:1.05rem;font-weight:700;color:var(--blue);margin-top:2px}
-  .ri .un{font-size:.72rem;color:var(--mu);font-weight:400}
-  .ri.hl{border-color:var(--blue);background:var(--blue-bg)}
-  .ri.hl .vl{color:var(--blue-d)}
-  .ri.full{grid-column:1/-1}
-  .ri.ok{border-color:var(--ok)}
-  .ri.ok .vl{color:var(--ok)}
-
-  /* SVG */
-  #mod-drueckteile .svg-box{width:100%;background:#fff;border-radius:6px;border:1px solid var(--border);padding:8px;overflow:hidden}
-  .svg-box svg{width:100%;height:auto}
-
-  /* Buttons */
-  #mod-drueckteile .btn{padding:10px 20px;border:none;border-radius:6px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
-  #mod-drueckteile .btn-p{background:var(--blue);color:#fff}.btn-p:hover{background:var(--blue-d);box-shadow:0 2px 8px rgba(27,94,158,.3)}
-  #mod-drueckteile .btn-s{background:var(--ok);color:#fff}.btn-s:hover{background:#1B5E20}
-  #mod-drueckteile .btn-o{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}.btn-o:hover{background:var(--blue-bg)}
-  #mod-drueckteile .btn-g{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
-
-  /* Tables */
-  #mod-drueckteile .ct{width:100%;border-collapse:collapse;font-size:.82rem}
-  .ct th,.ct td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
-  .ct th{color:var(--mu);font-weight:600;font-size:.7rem;text-transform:uppercase;letter-spacing:.3px;background:var(--bg)}
-  .ct td:last-child{text-align:right;font-weight:600}
-  .ct tr.total{border-top:2px solid var(--blue)}.ct tr.total td{color:var(--blue);font-weight:700;font-size:.95rem}
-
-  /* Info box */
-  #mod-drueckteile .ib{background:var(--blue-bg);border:1px solid rgba(27,94,158,.2);border-radius:6px;padding:10px 14px;font-size:.8rem;color:var(--blue);margin-bottom:14px}
-
-  /* Checkbox */
-  #mod-drueckteile .cb{display:flex;align-items:center;gap:8px;padding:6px 0}
-  .cb input[type=checkbox]{width:16px;height:16px;accent-color:var(--blue)}
-  .cb label{font-size:.82rem;color:var(--tx);cursor:pointer}
-
-  /* Formula box */
-  #mod-drueckteile .formula-box{background:var(--bg);border-radius:6px;padding:14px;font-family:'Courier New',monospace;font-size:.76rem;color:var(--blue-d);line-height:1.9;border:1px solid var(--border)}
-  .formula-box strong{color:var(--blue)}
-
-  /* Divider */
-  .divider{border-top:1px solid var(--border);padding-top:12px;margin-top:12px}
-
-  /* === AUFTRAGSBLATT STYLES === */
-  #mod-drueckteile .ab{max-width:1100px;margin:0 auto}
-  #mod-drueckteile .ab-header{display:flex;align-items:center;border:2px solid var(--blue);margin-bottom:0}
-  .ab-header-logo{width:60px;padding:5px;display:flex;align-items:center;justify-content:center;border-right:2px solid var(--blue);background:var(--white)}
-  .ab-header-logo img{max-width:50px}
-  .ab-header-company{flex:1;padding:5px 10px;border-right:2px solid var(--blue)}
-  .ab-header-company .name{font-size:1rem;font-weight:700;color:var(--blue)}
-  .ab-header-company .sub{font-size:.6rem;color:var(--gray);letter-spacing:.5px}
-  .ab-header-title{padding:5px 14px;text-align:right}
-  .ab-header-title .t1{font-size:1rem;font-weight:700;color:var(--blue)}
-  .ab-header-title .t2{font-size:.8rem;color:var(--blue)}
-
-  #mod-drueckteile .ab-section{border:1px solid var(--gray-xl);border-top:none}
-  .ab-section-title{background:var(--blue);color:#fff;padding:5px 12px;font-size:.78rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
-  .ab-section-title-light{background:var(--bg);color:var(--blue);padding:5px 12px;font-size:.78rem;font-weight:700;border-bottom:1px solid var(--gray-xl);letter-spacing:.5px}
-
-  #mod-drueckteile .ab-row{display:flex;border-bottom:1px solid var(--gray-xl);min-height:26px}
-  .ab-row:last-child{border-bottom:none}
-  #mod-drueckteile .ab-cell{padding:2px 8px;display:flex;align-items:center;font-size:.76rem;border-right:1px solid var(--gray-xl)}
-  .ab-cell:last-child{border-right:none}
-  .ab-cell.lbl{background:var(--bg);font-weight:600;color:var(--gray);min-width:110px;font-size:.68rem;text-transform:uppercase;letter-spacing:.2px}
-  .ab-cell.val{flex:1;font-weight:500;color:var(--tx)}
-  .ab-cell.val input,.ab-cell.val select{width:100%;border:none;background:transparent;font-size:.78rem;font-family:inherit;color:var(--tx);padding:1px 0;outline:none}
-  .ab-cell.val input:focus{background:var(--blue-bg)}
-  .ab-cell.val-blue{flex:1;font-weight:700;color:var(--blue);font-size:.82rem}
-  .ab-cell.val-result{flex:1;font-weight:700;color:var(--blue);background:var(--blue-bg);font-size:.82rem}
-  .ab-cell.val-orange{flex:1;font-weight:700;color:#E65100}
-  .ab-cell.half{width:50%}
-
-  .ab-check{display:flex;align-items:center;gap:4px;padding:1px 0}
-  .ab-check input[type=checkbox],.ab-check input[type=radio]{width:13px;height:13px;accent-color:var(--blue);margin:0}
-  .ab-check label{font-size:.72rem;color:var(--tx);cursor:pointer}
-
-  .ab-grid2{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--gray-xl);border-top:none}
-  .ab-grid2>div{border-bottom:1px solid var(--gray-xl);border-right:1px solid var(--gray-xl)}
-  .ab-grid2>div:nth-child(2n){border-right:none}
-
-  .ab-draw{background:#fff;border:1px solid var(--gray-xl);border-top:none;padding:8px;display:flex;align-items:center;justify-content:center}
-
-  .ab-date-row{display:flex;border:1px solid var(--gray-xl);border-top:none;border-bottom:none}
-  .ab-date-row #mod-drueckteile .ab-cell{font-size:.72rem}
-
-  /* Spinner animation */
-  @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-
-  /* Print */
-  @media print {
-    #mod-drueckteile {background:#fff}
-    #mod-drueckteile .tabs,#mod-drueckteile .btn-g,#mod-drueckteile .no-print{display:none!important}
-    #mod-drueckteile .card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}
-    #mod-drueckteile .app{max-width:100%;padding:0}
-    #mod-drueckteile .hdr{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-  }
-
-
-  :root {
-    --bg: #f5f6fa;
-    --surface: #ffffff;
-    --surface2: #eef0f5;
-    --border: #d0d5e8;
-    --accent: #1a5fcc;
-    --accent2: #6b3fc0;
-    --success: #16a34a;
-    --warning: #d97706;
-    --danger: #dc2626;
-    --text: #0f1117;
-    --text-muted: #6b7280;
-    --muted: #6b7280;
-    --radius: 10px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* ── Header ── */
-  header {
-    background: linear-gradient(135deg, #ffffff 0%, #f5f6fa 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 28px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .logo-icon {
-    width: 38px; height: 38px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 9px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-  }
-  header h1 { font-size: 17px; font-weight: 700; letter-spacing: .3px; color: #000; }
-  header small { font-size: 11px; color: var(--muted); }
-  .header-right { margin-left: auto; display: flex; gap: 8px; }
-  .kn-btn-sm {
-    padding: 6px 14px; border-radius: 7px; border: 1px solid var(--border);
-    background: var(--surface2); color: var(--text); font-size: 12px;
-    cursor: pointer; transition: all .18s;
-  }
-  .kn-btn-sm:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* ── Layout ── */
-  
-
-.kn-panel-left{border-right:none;border-bottom:1px solid #e2e6ef;max-height:none;}}
+.module-tabs{display:flex;gap:5px;padding:8px 1.5rem;background:#e8f9ff;border-bottom:2px solid #9de8f8;}
+.module-tab{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border:none;background:rgba(51,175,226,0.12);color:#0e8bbf;cursor:pointer;border-radius:7px;font-size:12px;font-weight:700;border:1.5px solid rgba(51,175,226,0.35);font-family:inherit;transition:all .15s;}
+.module-tab.active{background:#33afe2;color:#fff;border-color:#33afe2;}
+.module-tab:hover:not(.active){background:rgba(51,175,226,0.22);}
 </style>
 
 <div class="topbar">
@@ -405,30 +180,27 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-backgrou
       <div class="logo-tag">Flansche · Drückteile · Konusabwicklung · DXF Export</div>
     </div>
   </div>
-  <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
-    <a href="https://wa.me/4915222840600?text=Konfigurator%20Anfrage" target="_blank"
-       style="background:rgba(255,255,255,0.2);color:#fff;font-size:11px;font-weight:600;padding:6px 12px;border-radius:6px;text-decoration:none;border:1px solid rgba(255,255,255,0.4);">✉ Anfrage</a>
+  <div style="margin-left:auto;">
+    <a href="https://wa.me/4915222840600" target="_blank" style="background:rgba(255,255,255,0.2);color:#fff;font-size:11px;font-weight:600;padding:6px 12px;border-radius:6px;text-decoration:none;border:1px solid rgba(255,255,255,0.4);">✉ Anfrage</a>
   </div>
 </div>
 
+<div class="module-tabs" id="module-tabs">
+  <button class="module-tab active" onclick="showModule('flansch',this)">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>Flansche
+  </button>
+  <button class="module-tab" onclick="showModule('drueckteile',this)">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><ellipse cx="12" cy="8" rx="8" ry="4"/><path d="M4 8c0 6 4 10 8 10s8-4 8-10"/></svg>Drückteile
+  </button>
+  <button class="module-tab" onclick="showModule('konus',this)">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 22h20L12 2z"/></svg>Konus
+  </button>
+</div>
+<div id="flansch-module">
 <div class="hero-nav-area">
-  <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
-    <div class="hero-title" style="margin-bottom:0;">Industrie<b>konfigurator</b></div>
-    <div class="hero-sub" style="margin-bottom:0;">Flansche · Drückteile · Konusabwicklung</div>
-  </div>
-  <div style="display:flex;gap:5px;margin-bottom:8px;">
-    <button class="mtab active" onclick="switchMod('flansch',this)">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>Flansche
-    </button>
-    <button class="mtab" onclick="switchMod('drueckteile',this)">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><ellipse cx="12" cy="8" rx="8" ry="4"/><path d="M4 8c0 6 4 10 8 10s8-4 8-10"/></svg>Drückteile
-    </button>
-    <button class="mtab" onclick="switchMod('konus',this)">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 22h20L12 2z"/></svg>Konus
-    </button>
-  </div>
-  <div id="flansch-nav" style="display:block;">
-  <div class="acc-nav">>
+  <div class="hero-title">Flansch<b>konfigurator</b></div>
+  <div class="hero-sub">DIN 24154 · EN 1092-1 · DIN 28034 · ANSI/ASME B16.5 · DIN 2501 · DIN 24193 Rechteckflansche · DXF-Export</div>
+  <div class="acc-nav">
     <div class="acc-menu rund open" id="menu-rund">
       <div class="acc-header" onclick="toggleMenu('rund')">
         <div class="acc-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></div>
@@ -458,11 +230,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-backgrou
   </div>
 </div>
 
-</div><!-- /acc-nav -->
-  </div><!-- /flansch-nav -->
-</div><!-- /hero-nav-area -->
-
-<div id="mod-flansch" class="modpane active">
 <div id="pane-r1" class="tab-pane active"></div>
 <div id="pane-r2" class="tab-pane"></div>
 <div id="pane-r3" class="tab-pane"></div>
@@ -471,19 +238,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-backgrou
 <div id="pane-q1" class="tab-pane"></div>
 <div id="pane-q2" class="tab-pane"></div>
 <div id="pane-q3" class="tab-pane"></div>
-</div><!-- /mod-flansch -->
-
-<div id="mod-drueckteile" class="modpane">
-  <iframe src="https://drueckteile-rechner.pages.dev/"
-    style="width:100%;height:calc(100vh - 170px);min-height:700px;border:none;display:block;"
-    title="Drückteile Rechner"></iframe>
-</div>
-
-<div id="mod-konus" class="modpane">
-  <iframe src="https://konus-rechner.pages.dev/"
-    style="width:100%;height:calc(100vh - 170px);min-height:700px;border:none;display:block;"
-    title="Konus Abwicklung"></iframe>
-</div>
 
 <div class="footer">
   <div style="display:flex;align-items:center;gap:12px">
@@ -491,6 +245,12 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-backgrou
     <div class="f-txt">Entwickelt von <strong>Hamdi Güncavdı</strong> · Hasi Elektronic · Vaihingen/Enz</div>
   </div>
   <div class="f-r">© 2026</div>
+</div></div>
+<div id="drueckteile-module" style="display:none;">
+  <iframe src="https://drueckteile-rechner.pages.dev/" style="width:100%;height:calc(100vh - 120px);min-height:700px;border:none;display:block;" title="Drückteile Rechner"></iframe>
+</div>
+<div id="konus-module" style="display:none;">
+  <iframe src="https://konus-rechner.pages.dev/" style="width:100%;height:calc(100vh - 120px);min-height:700px;border:none;display:block;" title="Konus Abwicklung"></iframe>
 </div>
 
 <script>
@@ -943,21 +703,14 @@ setTimeout(()=>{
   setupRect('q3','q3','R3');
 },60);
 
-
-function switchMod(name,btn){
-  document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('active'));
+function showModule(name, btn) {
+  document.querySelectorAll('.module-tab').forEach(t => t.classList.remove('active'));
   if(btn) btn.classList.add('active');
-  document.querySelectorAll('.modpane').forEach(p=>{
-    p.style.setProperty('display','none','important');
-    p.classList.remove('active');
-  });
-  var m=document.getElementById('mod-'+name);
-  if(m){m.style.setProperty('display','block','important');m.classList.add('active');}
-  var fn=document.getElementById('flansch-nav');
-  if(fn) fn.style.display=name==='flansch'?'block':'none';
+  document.getElementById('flansch-module').style.display = 'none';
+  document.getElementById('drueckteile-module').style.display = 'none';
+  document.getElementById('konus-module').style.display = 'none';
+  document.getElementById(name + '-module').style.display = 'block';
 }
-@17/umd/
 
-
-
+</script>
 </body></html>
