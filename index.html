@@ -392,6 +392,76 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-backgrou
   .kn-btn-sm:hover { border-color: var(--accent); color: var(--accent); }
 
   /* ── Layout ── */
+  
+/* Konus scoped vars */
+#mod-konus {
+  --bg: #f5f6fa;
+  --surface: #ffffff;
+  --surface2: #eef0f5;
+  --border: #d0d5e8;
+  --accent: #33afe2;
+  --accent2: #0e8bbf;
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --text: #0f1117;
+  --muted: #6b7280;
+  --radius: 10px;
+}
+
+
+  :root {
+    --bg: #f5f6fa;
+    --surface: #ffffff;
+    --surface2: #eef0f5;
+    --border: #d0d5e8;
+    --accent: #1a5fcc;
+    --accent2: #6b3fc0;
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --text: #0f1117;
+    --text-muted: #6b7280;
+    --muted: #6b7280;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f6fa 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  header h1 { font-size: 17px; font-weight: 700; letter-spacing: .3px; color: #000; }
+  header small { font-size: 11px; color: var(--muted); }
+  .header-right { margin-left: auto; display: flex; gap: 8px; }
+  .kn-btn-sm {
+    padding: 6px 14px; border-radius: 7px; border: 1px solid var(--border);
+    background: var(--surface2); color: var(--text); font-size: 12px;
+    cursor: pointer; transition: all .18s;
+  }
+  .kn-btn-sm:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── Layout ── */
   .kn-main { display: grid; grid-template-columns: 360px 1fr; gap: 0; flex: 1; }
 
   /* ── Left Panel ── */
@@ -668,10 +738,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-backgrou
     body { page-break-after: avoid; }
   }}
 
-
 .kn-toast{position:fixed;bottom:18px;right:18px;background:#2E7D32;color:#fff;padding:8px 14px;border-radius:7px;font-size:12px;font-weight:600;opacity:0;transform:translateY(7px);transition:all .28s;pointer-events:none;z-index:9999;}
 .kn-toast.show{opacity:1;transform:translateY(0);}
-@media(max-width:680px){.kn-main{grid-template-columns:1fr;}.kn-panel-left{border-right:none;border-bottom:1px solid #e2e6ef;max-height:none;}}
+.kn-panel-left{border-right:none;border-bottom:1px solid #e2e6ef;max-height:none;}}
 </style>
 
 <div class="topbar">
@@ -762,11 +831,11 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-backgrou
     <!-- Kundenkürzel & Bearbeiter -->
     <div class="kn-field">
       <label>Kundenkürzel</label>
-      <div class="kn-input-wrap"><input type="text" id="kn-inputKunde" onkeypress="kn_enterNav(event, 'inputD')"></div>
+      <div class="kn-input-wrap"><input type="text" id="kn-inputKunde" onkeypress="kn_enterNav(event, 'kn-inputD')"></div>
     </div>
     <div class="kn-field">
       <label>Bearbeiter</label>
-      <div class="kn-input-wrap"><input type="text" id="kn-inputBearbeiter" onkeypress="kn_enterNav(event, 'inputD')" oninput="localStorage.setItem('bearbeiter',this.value)"></div>
+      <div class="kn-input-wrap"><input type="text" id="kn-inputBearbeiter" onkeypress="kn_enterNav(event, 'kn-inputD')" oninput="localStorage.setItem('bearbeiter',this.value)"></div>
     </div>
 
     <!-- Mode Tabs -->
@@ -781,28 +850,28 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-backgrou
     <div class="kn-field">
       <label>D <span id="kn-labelDInfo"></span></label>
       <div class="kn-input-wrap">
-        <input type="number" id="kn-inputD" step="0.1" min="0" onkeypress="kn_enterNav(event, 'inputD2')" oninput="kn_onInput()">
+        <input type="number" id="kn-inputD" step="0.1" min="0" onkeypress="kn_enterNav(event, 'kn-inputD2')" oninput="kn_onInput()">
         <span class="kn-input-unit">mm</span>
       </div>
     </div>
     <div class="kn-field">
       <label id="kn-labelD2">d</label>
       <div class="kn-input-wrap">
-        <input type="number" id="kn-inputD2" step="0.1" min="0" onkeypress="kn_enterNav(event, 'inputAlpha')" oninput="kn_onInput()">
+        <input type="number" id="kn-inputD2" step="0.1" min="0" onkeypress="kn_enterNav(event, 'kn-inputAlpha')" oninput="kn_onInput()">
         <span class="kn-input-unit">mm</span>
       </div>
     </div>
     <div class="kn-field" id="kn-fieldH" style="display:none">
       <label>H (Höhe)</label>
       <div class="kn-input-wrap">
-        <input type="number" id="kn-inputH" step="0.1" min="0" onkeypress="kn_enterNav(event, 'inputT')" oninput="kn_onInput()">
+        <input type="number" id="kn-inputH" step="0.1" min="0" onkeypress="kn_enterNav(event, 'kn-inputT')" oninput="kn_onInput()">
         <span class="kn-input-unit">mm</span>
       </div>
     </div>
     <div class="kn-field" id="kn-fieldAlpha">
       <label>α (Konuswinkel zur Horizontalen)</label>
       <div class="kn-input-wrap">
-        <input type="number" id="kn-inputAlpha" value="45" step="0.1" min="0.1" max="89.9" onkeypress="kn_enterNav(event, 'inputT')" oninput="kn_onInput()">
+        <input type="number" id="kn-inputAlpha" value="45" step="0.1" min="0.1" max="89.9" onkeypress="kn_enterNav(event, 'kn-inputT')" oninput="kn_onInput()">
         <span class="kn-input-unit">°</span>
       </div>
     </div>
@@ -849,7 +918,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-backgrou
       </select>
       <div id="kn-inputTCustomWrap" class="kn-input-wrap" style="display:none; margin-top:7px;">
         <input type="number" id="kn-inputTCustom" step="0.01" min="0" placeholder="z.B. 1,8"
-          onkeypress="kn_enterNav(event, 'inputZugD')"
+          onkeypress="kn_enterNav(event, 'kn-inputZugD')"
           oninput="document.getElementById('inputT').value=this.value; kn_onInput();">
         <span class="kn-input-unit">mm</span>
       </div>
@@ -872,14 +941,14 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-backgrou
     <div class="kn-field">
       <label>Zugabe D (optional)</label>
       <div class="kn-input-wrap">
-        <input type="number" id="kn-inputZugD" value="0" step="0.1" min="0" onkeypress="kn_enterNav(event, 'inputZugd')" oninput="kn_onInput()">
+        <input type="number" id="kn-inputZugD" value="0" step="0.1" min="0" onkeypress="kn_enterNav(event, 'kn-inputZugd')" oninput="kn_onInput()">
         <span class="kn-input-unit">mm</span>
       </div>
     </div>
     <div class="kn-field">
       <label>Zugabe d (optional)</label>
       <div class="kn-input-wrap">
-        <input type="number" id="kn-inputZugd" value="0" step="0.1" min="0" onkeypress="kn_enterNav(event, 'chkLaschen')" oninput="kn_onInput()">
+        <input type="number" id="kn-inputZugd" value="0" step="0.1" min="0" onkeypress="kn_enterNav(event, 'kn-chkLaschen')" oninput="kn_onInput()">
         <span class="kn-input-unit">mm</span>
       </div>
     </div>
